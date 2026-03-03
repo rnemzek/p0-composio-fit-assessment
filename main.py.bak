@@ -1,0 +1,49 @@
+import time
+from src.agents.researcher import Researcher
+from src.agents.executor import Executor
+from src.cognition.memory import Memory
+
+# Configuration
+REPO = "rnemzek/streaming-service-search-engine"
+EMAIL = "rnemzek+composio+test@gmail.com"
+SLACK_ID = "C0AHQAVN8UE"
+
+def main():
+    researcher = Researcher()
+    executor = Executor()
+    memory = Memory()
+
+    print(f"🚀 Gemmy is online. Monitoring {REPO} for Big Sexy...")
+
+    while True:
+        try:
+            print("\n🔍 Checking for new activity...")
+            # 1. Research the latest issues/PRs
+            raw_data = researcher.check_repository(REPO)
+            
+            # 2. Logic to filter based on Memory 
+            # (Simplifying for POC: If Researcher finds something new/relevant)
+            if raw_data:
+                # In a real build, you'd parse IDs here. 
+                # For the POC, we'll let the Executor handle the summary blast.
+                print("✨ New activity detected! Sending notifications...")
+                
+                result = executor.send_notifications(
+                    summary_data=raw_data,
+                    email_address=EMAIL,
+                    slack_channel=SLACK_ID
+                )
+                print(f"✅ Notifications sent: {result}")
+            else:
+                print("😴 Nothing new since the last check.")
+
+        except Exception as e:
+            print(f"⚠️ Oops! Gemmy hit a snag: {e}")
+
+        # Poll every 5 minutes (300 seconds)
+        print("⏲️ Going to sleep for 5 minutes...")
+        time.sleep(300)
+
+if __name__ == "__main__":
+    main()
+

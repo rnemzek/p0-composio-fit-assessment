@@ -1,0 +1,59 @@
+import os
+import logging
+from pathlib import Path
+from dotenv import load_dotenv
+from composio import Composio
+
+# 1. Setup Logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[logging.FileHandler("agent_activity.log"), logging.StreamHandler()]
+)
+logger = logging.getLogger("GmailConnector")
+
+# 2. Load Env
+env_path = Path(__file__).parent.parent.parent / '.env'
+load_dotenv(dotenv_path=env_path)
+
+api_key = os.environ.get("COMPOSIO_API_Key") or os.environ.get("COMPOSIO_API_KEY")
+gmail_recipient = os.environ.get("GMAIL_USER_ID") 
+
+# Verification IDs
+GMAIL_ACCOUNT_ID = "ca_7Zl0QpF1CNyk"
+VERIFIED_USER_ID = "pg-test-fb03294d-998b-4fbd-8143-ab9f142e7003"
+
+def test_gmail_connection():
+    try:
+        composio = Composio(
+            api_key=api_key,
+            toolkit_versions={"gmail": "20260227_00"}
+        )
+        
+        logger.info(f"Targeting Gmail for Entity: {VERIFIED_USER_ID}")
+
+        # The schema error asked for 'to' or 'recipient_email'
+        result = composio.tools.execute(
+            user_id=VERIFIED_USER_ID,
+            connected_account_id=GMAIL_ACCOUNT_ID,
+            slug="GMAIL_SEND_EMAIL",
+            arguments={
+                "to": gmail_recipient,
+                "recipient_email": gmail_recipient, # Safety redundant field
+                "subject": "POC Status: Gmail Parameter Sync Success",
+                "body": "Gemmy here! Parameters are aligned and the loop is closing. 🧅🚀"
+            }
+        )
+        
+        # Check if the tool itself reported a failure even with a 200 OK
+        if result.get('successful'):
+            logger.info(f"SUCCESS: Email sent to {gmail_recipient}")
+        else:
+            logger.error(f"TOOL ERROR: {result.get('error')}")
+        
+    except Exception as e:
+        logger.error(f"SDK FAILURE: {str(e)}")
+
+if __name__ == "__main__":
+    test_gmail_connection()
+
