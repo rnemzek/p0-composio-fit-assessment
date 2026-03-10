@@ -1,12 +1,13 @@
+import os
 import smtplib
 import ssl
 from email.message import EmailMessage
 
 # 1. Configuration
 # Use your main Gmail address as the username
-GMAIL_USER = 'rnemzek@gmail.com' 
+GMAIL_USER=os.environ.get("GMAIL_USER")                     # 'rnemzek@gmail.com' 
 # Use the 16-character App Password you just generated (no spaces)
-GMAIL_APP_PASSWORD = 'ioetj lnib pety yttt'
+GMAIL_APP_PASSWORD=os.environ.get("GMAIL_APP_PASSWORD")     # 'ioetj lnib pety yttt'
 
 # 2. Set the recipient with your custom plus-tag alias
 RECIPIENT_EMAIL = 'rnemzek+python@gmail.com'

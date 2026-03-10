@@ -1,0 +1,116 @@
+import os
+import time
+import logging
+import json
+from datetime import datetime, UTC
+from composio import Composio
+from src.cognition.memory import Memory
+from src.tools.github_connector import GitHubConnector # Assuming you rename Faux
+
+# Initialize Logger using your Env Vars
+log_path = os.environ.get("COMPOSIO_P0_LOG_PATH", "logs")
+log_file = os.environ.get("COMPOSIO_P0_LOG_NAME", "agent_activity.log")
+full_log_path = os.path.join(log_path, log_file)
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s | %(levelname)s | %(message)s',
+    handlers=[
+        logging.FileHandler(full_log_path),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger(os.environ.get("COMPOSIO_P0_LOGGER_NAME", "agent_logger"))
+
+def start_agent():
+    # Load Environment Config
+    api_key = os.environ.get("COMPOSIO_API_KEY")
+    user_id = os.environ.get("GMAIL_COMPOSIO_CONNECTION_ACCOUNT_USER_ID")
+    repo_owner = os.environ.get("REPO_OWNER", "rnemzek")
+    repo_name = os.environ.get("REPO_NAME", "streaming-service-search-engine")
+    poll_interval = int(os.environ.get("POLL_INTERVAL_SECONDS", "60"))
+    
+    # Initialize components
+    composio = Composio(api_key=api_key)
+    memory = Memory()
+    
+    logger.info(f"🚀 Starting Polling Agent for {repo_owner}/{repo_name}")
+
+    while True:
+        try:
+            # 1. Get state from memory
+            last_poll = memory.get_last_poll_time()
+            logger.info(f"📡 Polling GitHub for updates since: {last_poll}")
+
+            # 2. Execute GitHub Tool (Listing issues since last poll)
+            # Using execute directly as discussed for the refactor
+            response = composio.tools.execute(
+                user_id=user_id,
+                slug="GITHUB_ISSUES_LIST",
+                arguments={
+                    "owner": repo_owner,
+                    "repo": repo_name,
+                    "since": last_poll,
+                    "state": "all"
+                }
+            )
+
+            # 3. Log raw payload for your research
+            logger.debug(f"RAW_PAYLOAD: {json.dumps(response)}")
+
+            # 4. Process results
+            # GitHub returns a list of issues. Composio response structure varies by version, 
+            # usually it's in response['data'] or response['successful_results']
+            issues = response.get('data', []) if isinstance(response, dict) else []
+
+            for issue in issues:
+                issue_id = str(issue.get('number'))
+                
+                if memory.is_new("issues", issue_id):
+                    logger.info(f"✨ New Issue Detected: #{issue_id} - {issue.get('title')}")
+                    
+                    # Extract Data for Enriched Message
+                    title = issue.get('title', 'N/A')
+                    state = issue.get('state', 'N/A')
+                    body = issue.get('body', '') or ''
+                    body_preview = (body[:100] + '...') if len(body) > 100 else body
+                    labels = ", ".join([l['name'] for l in issue.get('labels', [])])
+
+                    summary = (
+                        f"🆔 Issue ID: {issue_id}\n"
+                        f"📌 Title: {title}\n"
+                        f"🚦 State: {state}\n"
+                        f"🏷️ Labels: {labels}\n"
+                        f"📝 Body: {body_preview}\n"
+                        f"🔗 Link: {issue.get('html_url')}"
+                    )
+
+                    # 5. Trigger Gmail via Composio
+                    composio.tools.execute(
+                        user_id=user_id,
+                        slug=os.environ.get("GMAIL_SLUG"),
+                        dangerously_skip_version_check=True,
+                        arguments={
+                            "to": os.environ.get("GMAIL_TO"),
+                            "subject": f"🚩 GitHub Alert: Issue #{issue_id}",
+                            "body": summary
+                        }
+                    )
+                    
+                    # 6. Save to memory
+                    memory.save_id("issues", issue_id)
+                    logger.info(f"✅ Notification sent and ID {issue_id} persisted.")
+
+            # 7. Update last poll time to NOW for the next loop
+            new_ts = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
+            memory.set_last_poll_time(new_ts)
+            
+        except Exception as e:
+            logger.error(f"❌ Loop Error: {str(e)}", exc_info=True)
+
+        logger.info(f"💤 Sleeping for {poll_interval}s...")
+        time.sleep(poll_interval)
+
+if __name__ == "__main__":
+    start_agent()
+

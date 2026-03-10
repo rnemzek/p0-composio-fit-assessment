@@ -1,0 +1,27 @@
+commit 27c23f537a03c8b5b2cf527c1ab15c91b68cf1d1
+Author: rnemzek <rnemzek@gmail.com>
+Date:   Tue Mar 10 12:07:37 2026 -0400
+
+    Implement GitHub polling + Gmail notifications for Issues
+    
+    - Rewrote github_connector.py: poll(since_ts) loops GH_POLL_SLUGS, handles
+      GITHUB_LIST_COMMITS separately (no state arg)
+    - Rewrote github_monitor.py: programmatic updated_at filter compensates for
+      GitHub API ignoring 'since' on issue events endpoint; deduplicates by issue
+      number (latest event wins); last_poll_time only advances when emails sent
+    - gmail_connector.py: fixed from_email param and added is_html flag
+    - Updated README with real project description, architecture, and status
+    
+    Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
+
+commit d054e93972adf01d2fcd18afb075a406f17affa0
+Author: rnemzek <rnemzek@gmail.com>
+Date:   Tue Mar 3 16:18:46 2026 -0500
+
+    First commit
+
+commit 0e2b3339cb657076bc434df5a5163503daa36650
+Author: rnemzek <rnemzek@gmail.com>
+Date:   Tue Mar 3 16:17:15 2026 -0500
+
+    first commit

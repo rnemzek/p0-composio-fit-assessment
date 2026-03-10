@@ -4,12 +4,14 @@ from datetime import datetime, timezone
 from src.cognition.memory import Memory
 from src.tools.github_connector import GitHubConnector
 from src.tools.gmail_connector import GmailConnector
+from src.tools.slack_connector import SlackConnector
 from src.tools.composio_wrapper import ComposioWrapper
 from src.utils.util import Util
 
 logger = logging.getLogger(os.environ.get("COMPOSIO_P0_LOGGER_NAME", "agent_logger"))
 
 ISSUE_EVENTS_SLUG = "GITHUB_LIST_ISSUE_EVENTS_FOR_A_REPOSITORY"
+COMMITS_SLUG      = "GITHUB_LIST_COMMITS"
 
 
 class GitHubMonitor:
@@ -17,7 +19,9 @@ class GitHubMonitor:
     def __init__(self):
         self.memory = Memory()
         self.gh_connector = GitHubConnector()
-        self.gmail = GmailConnector(ComposioWrapper())
+        wrapper = ComposioWrapper()
+        self.gmail = GmailConnector(wrapper)
+        self.slack = SlackConnector(wrapper)
         self.util = Util()
 
     def check_for_updates(self):
@@ -43,7 +47,9 @@ class GitHubMonitor:
             if data is not None and self.util.json_contains_data_items(data):
                 if slug == ISSUE_EVENTS_SLUG:
                     notifications_sent += self._notify_issues(data, last_poll)
-                # commits and PRs will be wired up here in subsequent phases
+                elif slug == COMMITS_SLUG:
+                    notifications_sent += self._notify_commits(data, last_poll)
+                # PRs will be wired up here in a subsequent phase
             else:
                 logger.info(f"GH_MONITOR: [{slug}] — no new events")
 
@@ -127,10 +133,62 @@ class GitHubMonitor:
                 )
 
                 self.gmail.send_mail(subject=subject, body=email_body)
-                logger.info(f"GH_MONITOR: email sent for issue #{issue.get('number')} [{title}]")
+                self.slack.send_message(f"{subject}\n{email_body}")
+                logger.info(f"GH_MONITOR: notified issue #{issue.get('number')} [{title}] via Gmail + Slack")
                 sent += 1
 
             except Exception as e:
                 logger.error(f"GH_MONITOR: failed to send email for issue: {e}")
+
+        return sent
+
+    def _notify_commits(self, data, last_poll):
+        """
+        Send one Gmail notification per commit since last_poll.
+        Returns the number of emails sent.
+        """
+        commits = data.get("data", {}).get("commits", [])
+
+        # Safety filter — GITHUB_LIST_COMMITS supports 'since' but guard anyway
+        new_commits = [
+            c for c in commits
+            if c.get("commit", {}).get("author", {}).get("date", "") > last_poll
+        ]
+
+        if not new_commits:
+            logger.info(f"GH_MONITOR: [{COMMITS_SLUG}] — no new commits after filtering")
+            return 0
+
+        logger.info(f"GH_MONITOR: [{COMMITS_SLUG}] — {len(new_commits)} new commit(s) found")
+        pretty = self.util.pretty_json(data)
+        logger.info(f"GH_MONITOR: payload:\n{pretty}")
+
+        sent = 0
+        for commit_item in new_commits:
+            try:
+                sha         = commit_item.get("sha", "unknown")
+                html_url    = commit_item.get("html_url", "unknown")
+                commit      = commit_item.get("commit", {})
+                author_date = commit.get("author", {}).get("date", "unknown")
+                author_name = commit.get("author", {}).get("name", "unknown")
+                message     = commit.get("message", "(no message)")
+
+                subject = f"Commit: {sha[:7]}"
+
+                email_body = (
+                    f"Poll Time: {last_poll}\n"
+                    f"Commit Created: {author_date}\n"
+                    f"Committed By: {author_name}\n"
+                    f"Commit URL: {html_url}\n"
+                    f"Message: {message}"
+                )
+
+                self.gmail.send_mail(subject=subject, body=email_body)
+                self.slack.send_message(f"{subject}\n{email_body}")
+                logger.info(f"GH_MONITOR: notified commit [{sha[:7]}] via Gmail + Slack")
+                sent += 1
+
+            except Exception as e:
+                logger.error(f"GH_MONITOR: failed to send email for commit: {e}")
 
         return sent

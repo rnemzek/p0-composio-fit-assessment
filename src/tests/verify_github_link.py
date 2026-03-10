@@ -16,8 +16,8 @@ def verify():
             slug="github_get_repository", # Try lowercase 'get_repo'
             dangerously_skip_version_check=True,
             arguments={
-                "owner": "rnemzek",
-                "repo": "streaming-service-search-engine"
+                "owner": os.environ.get("GMAIL_ACCOUNT_USER_ID"),     # rnemzek
+                "repo": os.environ.get("GH_REPO_NAME")                # streaming-service-search-engine
             }
         )
         # If we get a name back, the 'Pipe' is connected!

@@ -3,13 +3,13 @@ from composio import Composio
 
 # 1. Initialize the Composio client
 # Get your API key from https://app.composio.dev
-composio_client = Composio(api_key="ak_EvkNio0ZMRVbP78ldFMG")
+composio_client = Composio(api_key=os.environ.get("COMPOSIO_API_KEY")     # ak_EvkNio0ZMRVbP78ldFMG
 
 # 2. Initiate the connection for Gmail
 # user_id can be any unique string to identify this specific user/connection
 connection = composio_client.connected_accounts.initiate(
     user_id="rnemzek_composio_poc",
-    auth_config_id="ac_y7qx4vMIQuQd"
+    auth_config_id=os.environ.get("GMAIL_AUTH_CONFIG_ID")                 # ac_y7qx4vMIQuQd
 )
 
 # 3. Print the link to open in your browser

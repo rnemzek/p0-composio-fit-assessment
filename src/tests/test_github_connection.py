@@ -14,10 +14,9 @@ def test_github_direct():
     # 2. Use os.environ.get to grab from the shell (.bash_profile)
     composio_api_key = os.environ.get("COMPOSIO_API_KEY")
 
-    # 3. Use os.getenv to grab from the loaded .env file
-    repo_full_name = os.getenv("GH_REPO")
+    # 3. Use os.environ.get to grab from the loaded .env file
+    repo_full_name = os.environ.get("GH_REPO")
 
-    print(f"📂 Looking for .env at: {env_path}")
     print(f"🔑 Composio Key Found: {'✅ Yes' if composio_api_key else '❌ No'}")
     print(f"📁 GH_REPO Found: {'✅ Yes' if repo_full_name else '❌ No'}")
 
@@ -39,22 +38,10 @@ def test_github_direct():
 
     try:
         # Use lowercase string for action as per Composio 0.11.1
-#        output = client.tools.execute(
-#            "GITHUB_GET_ISSUES",
-#            "GITHUB_LIST_REPOSITORY_ISSUES",
-#            user_id="pg-test-fb03294d-998b-4fbd-8143-ab9f142e7003",
-#            version="20260227_00", 
-#            slug="GITHUB_LIST_REPOSITORY_ISSUES", 
-#            arguments={
-#                "owner": owner, 
-#                "repo": repo}
-#        )
-                 # Use ToolName_ActionName
+        # Use ToolName_ActionName
         output = client.tools.execute(
-#            "github_issues_list", # or "github_get_issues" # tried this one
-#            "GITHUB_GET_REPOSITORY_ISSUES",
-#            "GITHUB_ISSUES_LIST", # or "GITHUB_GET_ISSUES"
-            "GITHUB_GET_ISSUES",
+#            "GITHUB_LIST_REPOSITORY_ISSUES",
+            "GITHUB_LIST_ISSUE_EVENTS_FOR_A_REPOSITORY",
             arguments={
                 "owner": owner, 
                 "repo": repo

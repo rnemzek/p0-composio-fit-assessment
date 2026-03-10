@@ -11,11 +11,12 @@ try:
     # 1. REPLACE THE user_id BELOW with the full pg-test-... string from your terminal
     # 2. Ensure slug is SLACK_SEND_MESSAGE (or SLACK_CHAT_POST_MESSAGE if that fails)
     result = composio.tools.execute(
-        user_id="pg-test-fb03294d-998b-4fbd-8143-ab9f142e7003",
+#        user_id="pg-test-fb03294d-998b-4fbd-8143-ab9f142e7003",
+        user_id="rnemzek_composio_poc",
         slug="SLACK_SEND_MESSAGE",
         arguments={
             "channel": os.environ.get("SLACK_CHANNEL_ID"),         # C0AJ5QTA94Z
-            "text": "4th attemp: The onion is sauteed, the door is open, and the connection is ACTIVE! 🧅🚀"
+            "text": "nth attemp: The onion is sauteed, the door is open, and the connection is ACTIVE! 🧅🚀"
         }
     )
     

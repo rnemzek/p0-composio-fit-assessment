@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 composio = Composio(api_key=os.getenv("COMPOSIO_API_KEY"))
-USER_ID = "rnemzek_composio_poc"
+USER_ID = os.environ.get("GMAIL_ACCOUNT_USER_ID")     # rnemzek_composio_poc
 
 # The Streaming IMDB-Killer Repo
 REPO_OWNER = "rnemzek"

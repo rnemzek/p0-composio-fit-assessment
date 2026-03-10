@@ -1,0 +1,27 @@
+import os
+import logging
+from src.tools.composio_wrapper import ComposioWrapper
+from src.tools.slack_connector import SlackConnector
+from src.tools.gmail_connector import GmailConnector
+from src.utils.util import Util
+
+class Executor:
+    def __init__(self):
+        self.logger = logging.getLogger(os.environ.get("COMPOSIO_P0_LOGGER_NAME", "agent_logger"))
+        
+        # 1. Initialize the Wrapper
+        self.wrapper = ComposioWrapper()
+        
+        # 2. Inject Wrapper into Connectors
+        self.slack = SlackConnector(self.wrapper)
+        self.gmail = GmailConnector(self.wrapper) 
+        
+        # 3. GitHub Config
+        repo_env = os.environ.get("GH_REPO", "owner/repo")
+        self.repo_owner, self.repo_name = repo_env.split('/')
+
+    def run_cycle(self):
+        # We will add the "Meatier" GitHub Polling logic here next!
+        self.logger.info("SYSTEM: Executor cycle starting...")
+        pass
+

@@ -1,0 +1,196 @@
+2026-03-06 05:53:27,543 | INFO | ✅ SYSTEM: Logging initialized with daily rotation. Big Sexy is in the building!
+2026-03-06 05:54:36,749 | INFO | ✅ SYSTEM: Logging initialized with daily rotation. Big Sexy is in the building!
+2026-03-06 05:54:36,749 | INFO | 🚀 SYSTEM: Big Sexy's Agentic POC is waking up...
+2026-03-06 05:54:36,773 | INFO | SYSTEM: Starting execution cycle...
+2026-03-06 05:54:39,412 | INFO | SYSTEM: Cycle complete. Sleeping for 30s...
+2026-03-06 05:55:09,418 | INFO | SYSTEM: Starting execution cycle...
+2026-03-06 05:55:11,875 | INFO | SYSTEM: Cycle complete. Sleeping for 30s...
+2026-03-06 05:55:41,879 | INFO | SYSTEM: Starting execution cycle...
+2026-03-06 05:55:43,718 | INFO | SYSTEM: Cycle complete. Sleeping for 30s...
+2026-03-06 05:56:13,723 | INFO | SYSTEM: Starting execution cycle...
+2026-03-06 05:56:16,077 | INFO | SYSTEM: Cycle complete. Sleeping for 30s...
+2026-03-06 05:56:46,083 | INFO | SYSTEM: Starting execution cycle...
+2026-03-06 05:56:48,321 | INFO | SYSTEM: Cycle complete. Sleeping for 30s...
+2026-03-06 05:56:57,842 | INFO | SYSTEM: Shutdown signal received. Peace out.
+2026-03-06 06:10:51,548 | INFO | ✅ SYSTEM: Logging initialized with daily rotation. Big Sexy is in the building!
+2026-03-06 06:10:51,550 | INFO | 🚀 SYSTEM: Big Sexy's Agentic POC is waking up...
+2026-03-06 06:10:51,575 | INFO | SYSTEM: Starting execution cycle...
+2026-03-06 06:10:51,575 | INFO | EXECUTOR: Found 2 GitHub events.
+2026-03-06 06:10:52,609 | INFO | SLACK_TOOL: Message successfully sent to #composio-poc
+2026-03-06 06:10:52,609 | INFO | GMAIL_TOOL: Sending email | summary: Composio 0.11.1 test: 2026-03-06 06:10:51 body: This message was sent using the simplified Composio SDK.
+2026-03-06 06:10:52,611 | INFO | GMAIL_TOOL: timestamp=2026-03-06 06:10:52
+2026-03-06 06:10:52,611 | INFO | GMAIL_TOOL: composio_api_key=ak_NguOTc4AwH4s0Qu_KUQ7
+2026-03-06 06:10:52,618 | WARNING | GMAIL_TOOL: composio is not None
+2026-03-06 06:10:52,618 | INFO | get: GMAIL_ACCOUNT_USER_ID
+2026-03-06 06:10:52,618 | INFO | got: rnemzek_composio_poc
+2026-03-06 06:10:52,618 | INFO | GMAIL_TOOL: account_user_id=rnemzek_composio_poc
+2026-03-06 06:10:52,618 | INFO | GMAIL_TOOL: gmail_slug=GMAIL_SEND_EMAIL
+2026-03-06 06:10:52,618 | INFO | GMAIL_TOOL: gmail_to=rnemzek+composio-poc@gmail.com
+2026-03-06 06:10:52,618 | INFO | GMAIL_TOOL: gmail_from=Composio Bot <rnemzek+composio-poc@gmail.com
+2026-03-06 06:10:52,618 | INFO | GMAIL_TOOL: gmail_bot_version=20260227_00
+2026-03-06 06:10:53,865 | INFO | SYSTEM: Cycle complete. Sleeping for 30s...
+2026-03-06 06:11:23,868 | INFO | SYSTEM: Starting execution cycle...
+2026-03-06 06:11:23,871 | INFO | EXECUTOR: Found 2 GitHub events.
+2026-03-06 06:11:24,845 | INFO | SLACK_TOOL: Message successfully sent to #composio-poc
+2026-03-06 06:11:24,845 | INFO | GMAIL_TOOL: Sending email | summary: Composio 0.11.1 test: 2026-03-06 06:11:23 body: This message was sent using the simplified Composio SDK.
+2026-03-06 06:11:24,845 | INFO | GMAIL_TOOL: timestamp=2026-03-06 06:11:24
+2026-03-06 06:11:24,845 | INFO | GMAIL_TOOL: composio_api_key=ak_NguOTc4AwH4s0Qu_KUQ7
+2026-03-06 06:11:24,857 | WARNING | GMAIL_TOOL: composio is not None
+2026-03-06 06:11:24,857 | INFO | get: GMAIL_ACCOUNT_USER_ID
+2026-03-06 06:11:24,857 | INFO | got: rnemzek_composio_poc
+2026-03-06 06:11:24,857 | INFO | GMAIL_TOOL: account_user_id=rnemzek_composio_poc
+2026-03-06 06:11:24,857 | INFO | GMAIL_TOOL: gmail_slug=GMAIL_SEND_EMAIL
+2026-03-06 06:11:24,857 | INFO | GMAIL_TOOL: gmail_to=rnemzek+composio-poc@gmail.com
+2026-03-06 06:11:24,857 | INFO | GMAIL_TOOL: gmail_from=Composio Bot <rnemzek+composio-poc@gmail.com
+2026-03-06 06:11:24,857 | INFO | GMAIL_TOOL: gmail_bot_version=20260227_00
+2026-03-06 06:11:26,143 | INFO | SYSTEM: Cycle complete. Sleeping for 30s...
+2026-03-06 06:11:39,701 | INFO | SYSTEM: Shutdown signal received. Peace out.
+2026-03-06 19:35:20,737 | INFO | ✅ SYSTEM: Logging initialized with daily rotation. Big Sexy is in the building!
+2026-03-06 19:35:20,737 | INFO | 🚀 SYSTEM: Big Sexy's Agentic POC is waking up...
+2026-03-06 19:35:20,762 | INFO | SYSTEM: Starting execution cycle...
+2026-03-06 19:35:20,762 | INFO | EXECUTOR: Found 2 GitHub events.
+2026-03-06 19:35:21,911 | INFO | SLACK_TOOL: Message successfully sent to #composio-poc
+2026-03-06 19:35:21,911 | INFO | GMAIL_TOOL: Sending email | summary: Composio 0.11.1 test: 2026-03-06 19:35:20 body: This message was sent using the simplified Composio SDK.
+2026-03-06 19:35:21,913 | ERROR | GMAIL_TOOL ERROR: No module named 'src.tests.utils.util'
+2026-03-06 19:35:21,913 | INFO | SYSTEM: Cycle complete. Sleeping for 30s...
+2026-03-06 19:35:40,293 | INFO | SYSTEM: Shutdown signal received. Peace out.
+2026-03-06 19:43:50,599 | INFO | ✅ SYSTEM: Logging initialized with daily rotation. Big Sexy is in the building!
+2026-03-06 19:43:50,600 | INFO | 🚀 SYSTEM: Big Sexy's Agentic POC is waking up...
+2026-03-06 19:43:50,623 | INFO | SYSTEM: Starting execution cycle...
+2026-03-06 19:43:50,623 | INFO | EXECUTOR: Found 2 GitHub events.
+2026-03-06 19:43:51,494 | INFO | SLACK_TOOL: Message successfully sent to #composio-poc
+2026-03-06 19:43:51,494 | INFO | GMAIL_TOOL: Sending email | summary: Composio 0.11.1 test: 2026-03-06 19:43:50 body: This message was sent using the simplified Composio SDK.
+2026-03-06 19:43:51,494 | INFO | GMAIL_TOOL: timestamp=2026-03-06 19:43:51
+2026-03-06 19:43:51,495 | INFO | GMAIL_TOOL: composio_api_key=ak_NguOTc4AwH4s0Qu_KUQ7
+2026-03-06 19:43:51,503 | WARNING | GMAIL_TOOL: composio is not None
+2026-03-06 19:43:51,503 | INFO | get: GMAIL_ACCOUNT_USER_ID
+2026-03-06 19:43:51,503 | INFO | got: rnemzek_composio_poc
+2026-03-06 19:43:51,503 | INFO | GMAIL_TOOL: account_user_id=rnemzek_composio_poc
+2026-03-06 19:43:51,503 | INFO | GMAIL_TOOL: gmail_slug=GMAIL_SEND_EMAIL
+2026-03-06 19:43:51,503 | INFO | GMAIL_TOOL: gmail_to=rnemzek+composio-poc@gmail.com
+2026-03-06 19:43:51,503 | INFO | GMAIL_TOOL: gmail_from=Composio Bot <rnemzek+composio-poc@gmail.com
+2026-03-06 19:43:51,503 | INFO | GMAIL_TOOL: gmail_bot_version=20260227_00
+2026-03-06 19:43:52,893 | INFO | GMAIL_TOOL: Email sent successfully.
+2026-03-06 19:43:52,894 | INFO | SYSTEM: Cycle complete. Sleeping for 30s...
+2026-03-06 19:44:22,899 | INFO | SYSTEM: Starting execution cycle...
+2026-03-06 19:44:22,899 | INFO | EXECUTOR: Found 2 GitHub events.
+2026-03-06 19:44:24,249 | INFO | SLACK_TOOL: Message successfully sent to #composio-poc
+2026-03-06 19:44:24,249 | INFO | GMAIL_TOOL: Sending email | summary: Composio 0.11.1 test: 2026-03-06 19:44:22 body: This message was sent using the simplified Composio SDK.
+2026-03-06 19:44:24,249 | INFO | GMAIL_TOOL: timestamp=2026-03-06 19:44:24
+2026-03-06 19:44:24,249 | INFO | GMAIL_TOOL: composio_api_key=ak_NguOTc4AwH4s0Qu_KUQ7
+2026-03-06 19:44:24,256 | WARNING | GMAIL_TOOL: composio is not None
+2026-03-06 19:44:24,256 | INFO | get: GMAIL_ACCOUNT_USER_ID
+2026-03-06 19:44:24,256 | INFO | got: rnemzek_composio_poc
+2026-03-06 19:44:24,256 | INFO | GMAIL_TOOL: account_user_id=rnemzek_composio_poc
+2026-03-06 19:44:24,256 | INFO | GMAIL_TOOL: gmail_slug=GMAIL_SEND_EMAIL
+2026-03-06 19:44:24,256 | INFO | GMAIL_TOOL: gmail_to=rnemzek+composio-poc@gmail.com
+2026-03-06 19:44:24,257 | INFO | GMAIL_TOOL: gmail_from=Composio Bot <rnemzek+composio-poc@gmail.com
+2026-03-06 19:44:24,257 | INFO | GMAIL_TOOL: gmail_bot_version=20260227_00
+2026-03-06 19:44:25,556 | INFO | GMAIL_TOOL: Email sent successfully.
+2026-03-06 19:44:25,557 | INFO | SYSTEM: Cycle complete. Sleeping for 30s...
+2026-03-06 19:44:53,654 | INFO | SYSTEM: Shutdown signal received. Peace out.
+2026-03-06 20:00:17,085 | INFO | ✅ SYSTEM: Logging initialized with daily rotation. Big Sexy is in the building!
+2026-03-06 20:00:17,085 | INFO | 🚀 SYSTEM: Big Sexy's Agentic POC is waking up...
+2026-03-06 20:00:17,108 | INFO | SYSTEM: Starting execution cycle...
+2026-03-06 20:00:17,108 | INFO | EXECUTOR: Found 2 GitHub events.
+2026-03-06 20:00:18,219 | INFO | SLACK_TOOL: Message successfully sent to #composio-poc
+2026-03-06 20:00:18,220 | INFO | GMAIL_TOOL: Sending email | summary: Composio 0.11.1 test: 2026-03-06 20:00:17 body: This message was sent using the simplified Composio SDK.
+2026-03-06 20:00:18,220 | INFO | GMAIL_TOOL: timestamp=2026-03-06 20:00:18
+2026-03-06 20:00:18,220 | INFO | GMAIL_TOOL: composio_api_key=ak_NguOTc4AwH4s0Qu_KUQ7
+2026-03-06 20:00:18,228 | WARNING | GMAIL_TOOL: composio is not None
+2026-03-06 20:00:18,228 | INFO | get: GMAIL_ACCOUNT_USER_ID
+2026-03-06 20:00:18,228 | INFO | got: rnemzek_composio_poc
+2026-03-06 20:00:18,228 | INFO | GMAIL_TOOL: account_user_id=rnemzek_composio_poc
+2026-03-06 20:00:18,228 | INFO | GMAIL_TOOL: gmail_slug=GMAIL_SEND_EMAIL
+2026-03-06 20:00:18,228 | INFO | GMAIL_TOOL: gmail_to=rnemzek+composio-poc@gmail.com
+2026-03-06 20:00:18,228 | INFO | GMAIL_TOOL: gmail_from=Composio Bot <rnemzek+composio-poc@gmail.com
+2026-03-06 20:00:18,228 | INFO | GMAIL_TOOL: gmail_bot_version=20260227_00
+2026-03-06 20:00:20,047 | INFO | GMAIL_TOOL: Email sent successfully.
+2026-03-06 20:00:20,048 | INFO | SYSTEM: Cycle complete. Sleeping for 30s...
+2026-03-06 20:00:50,049 | INFO | SYSTEM: Starting execution cycle...
+2026-03-06 20:00:50,050 | INFO | EXECUTOR: Found 2 GitHub events.
+2026-03-06 20:00:50,743 | INFO | SLACK_TOOL: Message successfully sent to #composio-poc
+2026-03-06 20:00:50,743 | INFO | GMAIL_TOOL: Sending email | summary: Composio 0.11.1 test: 2026-03-06 20:00:50 body: This message was sent using the simplified Composio SDK.
+2026-03-06 20:00:50,743 | INFO | GMAIL_TOOL: timestamp=2026-03-06 20:00:50
+2026-03-06 20:00:50,744 | INFO | GMAIL_TOOL: composio_api_key=ak_NguOTc4AwH4s0Qu_KUQ7
+2026-03-06 20:00:50,754 | WARNING | GMAIL_TOOL: composio is not None
+2026-03-06 20:00:50,754 | INFO | get: GMAIL_ACCOUNT_USER_ID
+2026-03-06 20:00:50,754 | INFO | got: rnemzek_composio_poc
+2026-03-06 20:00:50,754 | INFO | GMAIL_TOOL: account_user_id=rnemzek_composio_poc
+2026-03-06 20:00:50,754 | INFO | GMAIL_TOOL: gmail_slug=GMAIL_SEND_EMAIL
+2026-03-06 20:00:50,754 | INFO | GMAIL_TOOL: gmail_to=rnemzek+composio-poc@gmail.com
+2026-03-06 20:00:50,754 | INFO | GMAIL_TOOL: gmail_from=Composio Bot <rnemzek+composio-poc@gmail.com
+2026-03-06 20:00:50,754 | INFO | GMAIL_TOOL: gmail_bot_version=20260227_00
+2026-03-06 20:00:51,997 | INFO | GMAIL_TOOL: Email sent successfully.
+2026-03-06 20:00:51,998 | INFO | SYSTEM: Cycle complete. Sleeping for 30s...
+2026-03-06 20:00:57,319 | INFO | SYSTEM: Shutdown signal received. Peace out.
+2026-03-06 20:01:39,718 | INFO | ✅ SYSTEM: Logging initialized with daily rotation. Big Sexy is in the building!
+2026-03-06 20:01:39,718 | INFO | 🚀 SYSTEM: Big Sexy's Agentic POC is waking up...
+2026-03-06 20:01:39,738 | INFO | SYSTEM: Starting execution cycle...
+2026-03-06 20:01:39,738 | INFO | EXECUTOR: Found 2 GitHub events.
+2026-03-06 20:01:40,998 | INFO | SLACK_TOOL: Message successfully sent to #composio-poc
+2026-03-06 20:01:40,998 | INFO | GMAIL_TOOL: Sending email | summary: Composio 0.11.1 test: 2026-03-06 20:01:39 body: This message was sent using the simplified Composio SDK.
+2026-03-06 20:01:40,998 | INFO | GMAIL_TOOL: timestamp=2026-03-06 20:01:40
+2026-03-06 20:01:40,998 | INFO | GMAIL_TOOL: composio_api_key=ak_NguOTc4AwH4s0Qu_KUQ7
+2026-03-06 20:01:41,005 | WARNING | GMAIL_TOOL: composio is not None
+2026-03-06 20:01:41,006 | INFO | get: GMAIL_ACCOUNT_USER_ID
+2026-03-06 20:01:41,006 | INFO | got: rnemzek_composio_poc
+2026-03-06 20:01:41,006 | INFO | GMAIL_TOOL: account_user_id=rnemzek_composio_poc
+2026-03-06 20:01:41,006 | INFO | GMAIL_TOOL: gmail_slug=GMAIL_SEND_EMAIL
+2026-03-06 20:01:41,006 | INFO | GMAIL_TOOL: gmail_to=rnemzek+composio-poc@gmail.com
+2026-03-06 20:01:41,006 | INFO | GMAIL_TOOL: gmail_from=Composio Bot <rnemzek+composio-poc@gmail.com
+2026-03-06 20:01:41,006 | INFO | GMAIL_TOOL: gmail_bot_version=20260227_00
+2026-03-06 20:01:42,176 | INFO | GMAIL_TOOL: Email sent successfully.
+2026-03-06 20:01:42,177 | INFO | SYSTEM: Cycle complete. Sleeping for 30s...
+2026-03-06 20:02:12,178 | INFO | SYSTEM: Starting execution cycle...
+2026-03-06 20:02:12,181 | INFO | EXECUTOR: Found 2 GitHub events.
+2026-03-06 20:02:13,079 | INFO | SLACK_TOOL: Message successfully sent to #composio-poc
+2026-03-06 20:02:13,079 | INFO | GMAIL_TOOL: Sending email | summary: Composio 0.11.1 test: 2026-03-06 20:02:12 body: This message was sent using the simplified Composio SDK.
+2026-03-06 20:02:13,079 | INFO | GMAIL_TOOL: timestamp=2026-03-06 20:02:13
+2026-03-06 20:02:13,080 | INFO | GMAIL_TOOL: composio_api_key=ak_NguOTc4AwH4s0Qu_KUQ7
+2026-03-06 20:02:13,093 | WARNING | GMAIL_TOOL: composio is not None
+2026-03-06 20:02:13,093 | INFO | get: GMAIL_ACCOUNT_USER_ID
+2026-03-06 20:02:13,093 | INFO | got: rnemzek_composio_poc
+2026-03-06 20:02:13,093 | INFO | GMAIL_TOOL: account_user_id=rnemzek_composio_poc
+2026-03-06 20:02:13,093 | INFO | GMAIL_TOOL: gmail_slug=GMAIL_SEND_EMAIL
+2026-03-06 20:02:13,094 | INFO | GMAIL_TOOL: gmail_to=rnemzek+composio-poc@gmail.com
+2026-03-06 20:02:13,094 | INFO | GMAIL_TOOL: gmail_from=Composio Bot <rnemzek+composio-poc@gmail.com
+2026-03-06 20:02:13,094 | INFO | GMAIL_TOOL: gmail_bot_version=20260227_00
+2026-03-06 20:02:14,426 | INFO | GMAIL_TOOL: Email sent successfully.
+2026-03-06 20:02:14,427 | INFO | SYSTEM: Cycle complete. Sleeping for 30s...
+2026-03-06 20:02:20,564 | INFO | SYSTEM: Shutdown signal received. Peace out.
+2026-03-06 21:15:24,456 | INFO | ✅ SYSTEM: Logging initialized with daily rotation. Big Sexy is in the building!
+2026-03-06 21:15:24,456 | INFO | 🚀 SYSTEM: Big Sexy's Agentic POC is waking up...
+2026-03-06 21:15:24,481 | INFO | SYSTEM: Starting execution cycle...
+2026-03-06 21:15:24,481 | INFO | EXECUTOR: Found 2 GitHub events.
+2026-03-06 21:15:25,603 | INFO | SLACK_TOOL: Message successfully sent to #composio-poc
+2026-03-06 21:15:25,604 | INFO | GMAIL_TOOL: Sending email | summary: Composio 0.11.1 test: 2026-03-06 21:15:24 body: This message was sent using the simplified Composio SDK.
+2026-03-06 21:15:25,604 | INFO | GMAIL_TOOL: timestamp=2026-03-06 21:15:25
+2026-03-06 21:15:25,604 | INFO | GMAIL_TOOL: composio_api_key=ak_NguOTc4AwH4s0Qu_KUQ7
+2026-03-06 21:15:25,612 | WARNING | GMAIL_TOOL: composio is not None
+2026-03-06 21:15:25,612 | INFO | get: GMAIL_ACCOUNT_USER_ID
+2026-03-06 21:15:25,612 | INFO | got: rnemzek_composio_poc
+2026-03-06 21:15:25,612 | INFO | GMAIL_TOOL: account_user_id=rnemzek_composio_poc
+2026-03-06 21:15:25,612 | INFO | GMAIL_TOOL: gmail_slug=GMAIL_SEND_EMAIL
+2026-03-06 21:15:25,612 | INFO | GMAIL_TOOL: gmail_to=rnemzek+composio-poc@gmail.com
+2026-03-06 21:15:25,612 | INFO | GMAIL_TOOL: gmail_from=Composio Bot <rnemzek+composio-poc@gmail.com
+2026-03-06 21:15:25,612 | INFO | GMAIL_TOOL: gmail_bot_version=20260227_00
+2026-03-06 21:15:27,051 | INFO | GMAIL_TOOL: Email sent successfully.
+2026-03-06 21:15:27,052 | INFO | SYSTEM: Cycle complete. Sleeping for 30s...
+2026-03-06 21:15:57,057 | INFO | SYSTEM: Starting execution cycle...
+2026-03-06 21:15:57,060 | INFO | EXECUTOR: Found 2 GitHub events.
+2026-03-06 21:15:57,889 | INFO | SLACK_TOOL: Message successfully sent to #composio-poc
+2026-03-06 21:15:57,889 | INFO | GMAIL_TOOL: Sending email | summary: Composio 0.11.1 test: 2026-03-06 21:15:57 body: This message was sent using the simplified Composio SDK.
+2026-03-06 21:15:57,890 | INFO | GMAIL_TOOL: timestamp=2026-03-06 21:15:57
+2026-03-06 21:15:57,890 | INFO | GMAIL_TOOL: composio_api_key=ak_NguOTc4AwH4s0Qu_KUQ7
+2026-03-06 21:15:57,902 | WARNING | GMAIL_TOOL: composio is not None
+2026-03-06 21:15:57,902 | INFO | get: GMAIL_ACCOUNT_USER_ID
+2026-03-06 21:15:57,902 | INFO | got: rnemzek_composio_poc
+2026-03-06 21:15:57,902 | INFO | GMAIL_TOOL: account_user_id=rnemzek_composio_poc
+2026-03-06 21:15:57,902 | INFO | GMAIL_TOOL: gmail_slug=GMAIL_SEND_EMAIL
+2026-03-06 21:15:57,902 | INFO | GMAIL_TOOL: gmail_to=rnemzek+composio-poc@gmail.com
+2026-03-06 21:15:57,902 | INFO | GMAIL_TOOL: gmail_from=Composio Bot <rnemzek+composio-poc@gmail.com
+2026-03-06 21:15:57,902 | INFO | GMAIL_TOOL: gmail_bot_version=20260227_00
+2026-03-06 21:15:59,100 | INFO | GMAIL_TOOL: Email sent successfully.
+2026-03-06 21:15:59,101 | INFO | SYSTEM: Cycle complete. Sleeping for 30s...
+2026-03-06 21:16:01,643 | INFO | SYSTEM: Shutdown signal received. Peace out.
