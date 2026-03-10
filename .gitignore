@@ -1,8 +1,9 @@
 # ignore
 ./logs                                 # logs directory
-*.*bak                                 # backup files
+*.*bak*                                 # backup files
 __pycache__                            # python bytecode
 *.pyc
 *.pyo
 .git                                   # git file specific to user
 .claude                                # claude code specific to user
+.gitignore                             # igore thyself
