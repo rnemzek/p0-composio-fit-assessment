@@ -1,75 +1,136 @@
 import os
 import logging
-import time
-from composio import Composio  # The ONLY thing we need
-from dotenv import load_dotenv
+from datetime import datetime, timezone
+from src.cognition.memory import Memory
+from src.tools.github_connector import GitHubConnector
+from src.tools.gmail_connector import GmailConnector
+from src.tools.composio_wrapper import ComposioWrapper
+from src.utils.util import Util
 
-# Gemmy's Clean Logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s | %(levelname)s | %(message)s')
-logger = logging.getLogger("GitHubMonitor")
+logger = logging.getLogger(os.environ.get("COMPOSIO_P0_LOGGER_NAME", "agent_logger"))
 
-load_dotenv()
-# Initialize the base client
-composio = Composio(api_key=os.getenv("COMPOSIO_API_KEY"))
+ISSUE_EVENTS_SLUG = "GITHUB_LIST_ISSUE_EVENTS_FOR_A_REPOSITORY"
 
-USER_ID = "rnemzek_composio_poc"
-REPO_OWNER = "rnemzek" 
-REPO_NAME = "streaming-service-search-engine"
 
-def start_agent():
-    # 1. Register Webhooks (Using the slugs that worked before)
-    slugs = ["github_commit_event", "github_pull_request_event"]
-    
-    logger.info("📡 Registering Webhooks...")
-    for slug in slugs:
-        try:
-            composio.triggers.create(
-                slug=slug,
-                user_id=USER_ID,
-                trigger_config={"owner": REPO_OWNER, "repo": REPO_NAME}
-            )
-            logger.info(f"✅ Subscribed: {slug}")
-        except Exception as e:
-            logger.warning(f"Note for {slug}: {e}")
+class GitHubMonitor:
 
-    # 2. The Manual Listener (The most stable way in 0.11.1)
-    logger.info("🕵️ Starting Real-time Listener...")
-    listener = composio.triggers.subscribe()
+    def __init__(self):
+        self.memory = Memory()
+        self.gh_connector = GitHubConnector()
+        self.gmail = GmailConnector(ComposioWrapper())
+        self.util = Util()
 
-    @listener.handle()
-    def on_github_event(event):
-        # GEMMY FIX: Use getattr to safely handle metadata
-        event_id = getattr(event, 'id', 'unknown')
-        logger.info(f"🔔 ALERT: Received {event.trigger_slug} (ID: {event_id})!")
-        
-        try:
-            # Let's simplify the payload for the first successful test
-            summary = f"GitHub Activity: {event.trigger_slug}\n"
-            summary += f"Check your repo: https://github.com{REPO_OWNER}/{REPO_NAME}"
+    def check_for_updates(self):
+        """
+        Poll GitHub for new Issues, Pull Requests, and Commits.
 
-            composio.tools.execute(
-                user_id=USER_ID,
-                slug="GMAIL_SEND_EMAIL",
-                dangerously_skip_version_check=True, # Add this here too!
-                arguments={
-                    "to": "rnemzek+composio-poc@gmail.com",
-                    "subject": f"🚩 GitHub Alert: {event.trigger_slug}",
-                    "body": summary
-                }
-            )
-            logger.info("📧 Gmail notification sent!")
-        except Exception as e:
-            logger.error(f"Gmail Error: {e}")
+        last_poll_time update logic:
+          - Genuinely new events found → update last_poll_time to start_ts
+          - Nothing new               → leave last_poll_time unchanged
+        """
 
-    logger.info("🕵️ Agent ACTIVE. Waiting for events... (Ctrl+C to stop)")
-    
-    # 3. The "Dead Man's Switch" to keep the script from exiting
-    try:
-        while True:
-            time.sleep(1)
-    except KeyboardInterrupt:
-        logger.info("Shutting down Gemmy's Agent...")
+        # 1. Capture timestamps
+        last_poll = self.memory.get_last_poll_time()
+        start_ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        logger.info(f"GH_MONITOR: scanning since [{last_poll}]")
 
-if __name__ == "__main__":
-    start_agent()
+        # 2. Delegate data pull to connector
+        results = self.gh_connector.poll(last_poll)
 
+        # 3. Dispatch notifications per slug; track genuine new activity
+        notifications_sent = 0
+        for slug, data in results.items():
+            if data is not None and self.util.json_contains_data_items(data):
+                if slug == ISSUE_EVENTS_SLUG:
+                    notifications_sent += self._notify_issues(data, last_poll)
+                # commits and PRs will be wired up here in subsequent phases
+            else:
+                logger.info(f"GH_MONITOR: [{slug}] — no new events")
+
+        # 4. Update last_poll_time only when genuinely new events were notified
+        if notifications_sent > 0:
+            self.memory.set_last_poll_time(start_ts)
+            logger.info(f"GH_MONITOR: last_poll_time updated to [{start_ts}]")
+        else:
+            logger.info(f"GH_MONITOR: no new events — last_poll_time unchanged [{last_poll}]")
+
+        logger.info(f"GH_MONITOR: cycle complete | notifications_sent={notifications_sent}")
+        return notifications_sent > 0
+
+    def _notify_issues(self, data, last_poll):
+        """
+        Send one Gmail notification per unique issue updated since last_poll.
+        Returns the number of emails sent.
+        """
+        details = data.get("data", {}).get("details", [])
+
+        # Keep only the latest event per issue number, filtered to updated_at > last_poll.
+        # GitHub ignores our 'since' parameter for this endpoint, so we filter here.
+        latest_by_issue = {}
+        for detail in details:
+            issue = detail.get("issue", {})
+            issue_number = issue.get("number")
+            if issue_number is None:
+                continue
+            updated_at = issue.get("updated_at", "")
+            if updated_at <= last_poll:
+                continue
+            existing = latest_by_issue.get(issue_number)
+            if existing is None or updated_at > existing["issue"].get("updated_at", ""):
+                latest_by_issue[issue_number] = detail
+
+        if not latest_by_issue:
+            logger.info(f"GH_MONITOR: [{ISSUE_EVENTS_SLUG}] — no new issues after filtering")
+            return 0
+
+        logger.info(f"GH_MONITOR: [{ISSUE_EVENTS_SLUG}] — {len(latest_by_issue)} new issue(s) found")
+        pretty = self.util.pretty_json(data)
+        logger.info(f"GH_MONITOR: payload:\n{pretty}")
+
+        sent = 0
+        for detail in latest_by_issue.values():
+            try:
+                issue            = detail.get("issue", {})
+                issue_created_at = issue.get("created_at", "unknown")
+                updated_at       = issue.get("updated_at") or issue.get("created_at", "unknown")
+                html_url         = issue.get("html_url", "unknown")
+                title            = issue.get("title", "(no title)")
+                state            = issue.get("state", "unknown").upper()
+                closed_at        = issue.get("closed_at")
+                labels           = issue.get("labels", [])
+                body_text        = issue.get("body") or ""
+
+                # --- subject ---
+                subject = f"Issue: {issue.get('number')} | {updated_at}"
+
+                # --- state line ---
+                if state == "CLOSED" and closed_at:
+                    state_line = f"State: CLOSED ({closed_at})"
+                else:
+                    state_line = f"State: {state}"
+
+                # --- labels (uppercase) ---
+                label_lines = "\n".join(f"  {lbl.get('name', '').upper()}" for lbl in labels)
+
+                # --- body preview ---
+                body_preview = body_text[:200]
+
+                email_body = (
+                    f"Poll Time: {last_poll}\n"
+                    f"Issue Created: {issue_created_at}\n"
+                    f"Last Updated: {updated_at}\n"
+                    f"Issue URL: {html_url}\n"
+                    f"Title: {title}\n"
+                    f"{state_line}\n"
+                    f"Labels:\n{label_lines}\n"
+                    f"\nBody: {body_preview}"
+                )
+
+                self.gmail.send_mail(subject=subject, body=email_body)
+                logger.info(f"GH_MONITOR: email sent for issue #{issue.get('number')} [{title}]")
+                sent += 1
+
+            except Exception as e:
+                logger.error(f"GH_MONITOR: failed to send email for issue: {e}")
+
+        return sent

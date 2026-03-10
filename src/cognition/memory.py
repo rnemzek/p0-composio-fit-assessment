@@ -28,3 +28,11 @@ class Memory:
             with open(self.storage_file, 'w') as f:
                 json.dump(self.notified_ids, f, indent=4)
 
+    def get_last_poll_time(self):
+        return self.notified_ids.get("last_poll_time", "2026-01-01T00:00:00Z")
+
+    def set_last_poll_time(self, ts):
+        self.notified_ids["last_poll_time"] = ts
+        with open(self.storage_file, 'w') as f:
+            json.dump(self.notified_ids, f, indent=4)
+

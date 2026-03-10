@@ -1,56 +1,36 @@
+import os
 import logging
-from composio import Composio
-from src.tools.github_connector import FauxGitHubConnector
-#from src.tools.gmail_connector import FauxGmailConnector
-from src.tools.gmail_connector import GmailConnector
-from src.utils.util import getDateTimestamp
+from src.agents.github_monitor import GitHubMonitor
 
-logger = logging.getLogger("agent_logger")
-timestamp = getDateTimestamp()
+# Use the same logger name from your main.py config
+logger = logging.getLogger(os.environ.get("COMPOSIO_P0_LOGGER_NAME", "agent_logger"))
 
 class Executor:
     def __init__(self):
-        # Initialize the REAL Composio client from your successful test
-        self.composio = Composio(
-            api_key="ak_NguOTc4AwH4s0Qu_KUQ7",
-            toolkit_versions={"slack": "20260227_00"}
-        )
-        self.user_id = "pg-test-fb03294d-998b-4fbd-8143-ab9f142e7003"
-        
-        # Keep the Faux tools for now
-        self.gh = FauxGitHubConnector()
-#        self.gm = FauxGmailConnector()
-        self.gm = GmailConnector()
+        # 1. Initialize our specialized monitors
+        # This keeps the logic for 'HOW' to poll GitHub inside the monitor
+        try:
+            self.gh_monitor = GitHubMonitor()
+            logger.info("🛠️ EXECUTOR: GitHub Monitor initialized and linked.")
+        except Exception as e:
+            logger.error(f"🛠️ EXECUTOR: Failed to initialize GitHub Monitor: {e}")
+            self.gh_monitor = None
 
     def run_cycle(self):
-        # 1. Poll the Faux GitHub Tool
-        updates = self.gh.poll_updates()
-        
-        if updates:
-            logger.info(f"EXECUTOR: Found {len(updates)} GitHub events.")
-            
-            # 2. TRIGGER REAL SLACK MESSAGE
-            try:
-                dateTimestamp = getDateTimestamp()
-                msg = f"🚀 POC Alert " + timestamp + ": Detected {len(updates)} new GitHub issues! Check the log, Big Sexy."
-                self.composio.tools.execute(
-                    user_id=self.user_id,
-                    slug="SLACK_SEND_MESSAGE",
-                    arguments={
-                        "channel": "C0AJ5QTA94Z",
-                        "text": msg
-                    }
-                )
-                logger.info("SLACK_TOOL: Message successfully sent to #composio-poc")
-            except Exception as e:
-                logger.error(f"SLACK_TOOL ERROR: {e}")
+        """
+        This is called by the while-loop in main.py.
+        Every cycle, we check our various 'senses' (monitors).
+        """
+        logger.info("🎬 EXECUTOR: Starting execution cycle...")
 
-            # 3. Use the Faux Gmail Tool
-            #self.gm.send_log_email(updates)
-            # 3. Use the Faux Gmail Tool
-            subject = "Composio 0.11.1 test: " + timestamp
-            body = "This message was sent using the simplified Composio SDK."
-            result = self.gm.send_mail(subject, body)
-            
-        return updates
+        if self.gh_monitor:
+            try:
+                # 2. Check for new GitHub Issues/Events
+                self.gh_monitor.check_for_updates()
+            except Exception as e:
+                logger.error(f"❌ EXECUTOR: GitHub check failed this cycle: {e}")
+        else:
+            logger.warning("⚠️ EXECUTOR: GitHub Monitor is offline, skipping check.")
+
+        logger.info("🏁 EXECUTOR: Cycle complete.")
 

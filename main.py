@@ -1,33 +1,70 @@
 import time
 import os
 import logging
+from logging.handlers import TimedRotatingFileHandler
 from src.agents.executor import Executor
 
-# Ensure logs directory exists at project root
-os.makedirs("logs", exist_ok=True)
-LOG_PATH = "logs/agent_activity.log"
+#---------- CONFIGURE LOGGER ---------- #
 
-# Force configuration to ensure it writes immediately
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s | %(message)s',
-    handlers=[logging.FileHandler(LOG_PATH), logging.StreamHandler()],
-    force=True 
+# 1. Grab base directory
+project_dir = os.environ.get("COMPOSIO_P0_DIR")
+if not project_dir:
+    raise ValueError("Big Sexy, you forgot to set 'COMPOSIO_P0_DIR'!")
+
+log_dir = os.path.join(project_dir, "logs")
+os.makedirs(log_dir, exist_ok=True)
+
+# 2. Grab environment variables for rotation
+logger_name = os.environ.get("COMPOSIO_P0_LOGGER_NAME", "agent_logger")
+log_file_name = os.environ.get("COMPOSIO_P0_LOG_NAME", "agent_activity.log")
+log_config_when = os.environ.get("COMPOSIO_P0_LOG_CONFIG_WHEN", "midnight")
+log_config_interval = int(os.environ.get("COMPOSIO_P0_LOG_CONFIG_INTERVAL", 1))
+log_config_backup_count = int(os.environ.get("COMPOSIO_P0_LOG_CONFIG_BACKUPCOUNT", 7))
+log_config_encoding = os.environ.get("COMPOSIO_P0_LOG_CONFIG_ENCODING", "utf-8") # Fixed typo!
+
+# 3. Setup the Logger
+logger = logging.getLogger(logger_name)
+#logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
+
+# 4. Create the Daily Rotating Handler
+file_handler = TimedRotatingFileHandler(
+    filename=os.path.join(log_dir, log_file_name),
+    when=log_config_when,
+    interval=log_config_interval,
+    backupCount=log_config_backup_count,
+    encoding=log_config_encoding
 )
-logger = logging.getLogger("agent_logger")
+
+# 5. Create a Stream Handler (so you can see it in your terminal)
+console_handler = logging.StreamHandler()
+
+# 6. Apply formatting to both
+formatter = logging.Formatter('%(asctime)s | %(levelname)s | %(message)s')
+file_handler.setFormatter(formatter)
+console_handler.setFormatter(formatter)
+
+# 7. Add handlers to logger
+logger.addHandler(file_handler)
+logger.addHandler(console_handler)
+
+logger.info("✅ SYSTEM: Logging initialized with daily rotation. Big Sexy is in the building!")
+
+# ---------- START OF MAIN ---------- #
 
 def main():
     logger.info("🚀 SYSTEM: Big Sexy's Agentic POC is waking up...")
     
     try:
-        # Initialize the Executor (which holds your Faux tools)
+        # Initialize the Executor
         agent_executor = Executor()
         
         while True:
             logger.info("SYSTEM: Starting execution cycle...")
             agent_executor.run_cycle()
             
-            delay = 10 # 10 seconds for the POC
+            # Using your string-to-int skill here!
+            delay = int(os.environ.get("COMPOSIO_MAIN_LOOP_DELAY", 10))
             logger.info(f"SYSTEM: Cycle complete. Sleeping for {delay}s...")
             time.sleep(delay)
             
