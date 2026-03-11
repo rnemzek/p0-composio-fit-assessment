@@ -3,6 +3,8 @@
 A proof-of-concept agentic system that monitors a GitHub repository for new Issues, Pull Requests, and Commits, then delivers notifications via Gmail (and Slack, coming soon). Built on [Composio](https://composio.dev) to evaluate its fitness as a tool-integration layer.
 
 ---
+## PR Test
+# added bogus line to README.md to create a PR for testing in POC
 
 ## How It Works
 
