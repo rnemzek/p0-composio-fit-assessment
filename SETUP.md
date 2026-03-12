@@ -49,8 +49,8 @@
   ├────────────────────┼──────────────────────────────────────────────────────────────────────────┤
   │ GH_VERSION         │ GitHub Composio app version                                              │
   ├────────────────────┼──────────────────────────────────────────────────────────────────────────┤
-  │ GH_PR_DIFF_BASE_URL│ Base URL for fetching PR diffs (e.g. https://patch-diff.githubusercontent│
-  │                    │ .com/raw). Full URL built as {base}/{owner}/{repo}/pull/{number}.diff     │
+  │ GH_PR_DIFF_BASE_URL│ Base URL for fetching PR diffs (e.g. https://github.com).               │
+  │                    │ Full URL built as {base}/{owner}/{repo}/pull/{number}.diff                │
   └────────────────────┴──────────────────────────────────────────────────────────────────────────┘
 
   Gmail
