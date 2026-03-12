@@ -80,6 +80,8 @@ class GitHubMonitor:
             issue_number = issue.get("number")
             if issue_number is None:
                 continue
+            if "pull_request" in issue:
+                continue
             updated_at = issue.get("updated_at", "")
             if updated_at <= last_poll:
                 continue
