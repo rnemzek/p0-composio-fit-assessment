@@ -1,5 +1,6 @@
 import os
 import logging
+import requests
 from datetime import datetime, timezone
 from src.cognition.memory import Memory
 from src.tools.github_connector import GitHubConnector
@@ -224,11 +225,23 @@ class GitHubMonitor:
                 created_at  = pr.get("created_at", "unknown")
                 updated_at  = pr.get("updated_at", "unknown")
                 html_url    = pr.get("html_url", "unknown")
+                diff_url    = pr.get("diff_url", "")
                 body_text   = pr.get("body") or ""
                 created_by  = pr.get("head", {}).get("user", {}).get("login", "unknown")
                 repo_full   = pr.get("base", {}).get("repo", {}).get("full_name", "unknown")
 
                 body_preview = body_text[:200]
+
+                # Fetch diff text
+                diff_text = ""
+                if diff_url:
+                    try:
+                        diff_resp = requests.get(diff_url, timeout=10)
+                        diff_resp.raise_for_status()
+                        diff_text = diff_resp.text
+                    except Exception as diff_err:
+                        logger.warning(f"GH_MONITOR: failed to fetch diff for PR #{number}: {diff_err}")
+                        diff_text = "(unavailable)"
 
                 subject = f"{repo_full} | {title[:20]}"
 
@@ -240,7 +253,8 @@ class GitHubMonitor:
                     f"Repo: {repo_full}\n"
                     f"PR URL: {html_url}\n"
                     f"PR State: {state}\n"
-                    f"Message: {body_preview}"
+                    f"Message: {body_preview}\n"
+                    f"PR Diff:\n{diff_text}"
                 )
 
                 slack_body = (
@@ -251,7 +265,8 @@ class GitHubMonitor:
                     f"PR Created By: {created_by}\n"
                     f"PR URL: {html_url}\n"
                     f"PR State: {state}\n"
-                    f"Message: {body_preview}"
+                    f"Message: {body_preview}\n"
+                    f"PR Diff:\n{diff_text}"
                 )
 
                 self.gmail.send_mail(subject=subject, body=email_body)
