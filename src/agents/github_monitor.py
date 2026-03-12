@@ -232,7 +232,7 @@ class GitHubMonitor:
 
                 # Fetch diff text via Util using env-var base URL
                 diff_text = ""
-                diff_base = os.environ.get("GH_PR_DIFF_BASE_URL", "")
+                diff_base = os.environ.get("PR_HTTP_DIFF_URL", "")
                 if diff_base:
                     diff_url = f"{diff_base}/{repo_full}/pull/{number}.diff"
                     try:
