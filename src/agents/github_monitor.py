@@ -242,7 +242,7 @@ class GitHubMonitor:
                         logger.warning(f"GH_MONITOR: failed to fetch diff for PR #{number}: {diff_err}")
                         diff_text = "(unavailable)"
 
-                subject = f"{repo_full} | {title[:20]}"
+                subject = f"{repo_full} | PR#{number} | {title[:20]}"
 
                 email_body = (
                     f"Poll Time: {last_poll}\n"
