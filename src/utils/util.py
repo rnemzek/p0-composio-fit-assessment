@@ -1,5 +1,6 @@
 import os
 import json
+import requests
 from datetime import datetime
 
 class Util:
@@ -44,6 +45,11 @@ class Util:
             return data
         else:
             return json.loads(data)
+
+    def fetch_url(self, url):
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+        return response.text
 
     def json_contains_data_items(self, data):
         data_dict = self.dictify_json(data)

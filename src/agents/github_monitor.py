@@ -1,6 +1,5 @@
 import os
 import logging
-import requests
 from datetime import datetime, timezone
 from src.cognition.memory import Memory
 from src.tools.github_connector import GitHubConnector
@@ -225,20 +224,19 @@ class GitHubMonitor:
                 created_at  = pr.get("created_at", "unknown")
                 updated_at  = pr.get("updated_at", "unknown")
                 html_url    = pr.get("html_url", "unknown")
-                diff_url    = pr.get("diff_url", "")
                 body_text   = pr.get("body") or ""
                 created_by  = pr.get("head", {}).get("user", {}).get("login", "unknown")
                 repo_full   = pr.get("base", {}).get("repo", {}).get("full_name", "unknown")
 
                 body_preview = body_text[:200]
 
-                # Fetch diff text
+                # Fetch diff text via Util using env-var base URL
                 diff_text = ""
-                if diff_url:
+                diff_base = os.environ.get("GH_PR_DIFF_BASE_URL", "")
+                if diff_base:
+                    diff_url = f"{diff_base}/{repo_full}/pull/{number}.diff"
                     try:
-                        diff_resp = requests.get(diff_url, timeout=10)
-                        diff_resp.raise_for_status()
-                        diff_text = diff_resp.text
+                        diff_text = self.util.fetch_url(diff_url)
                     except Exception as diff_err:
                         logger.warning(f"GH_MONITOR: failed to fetch diff for PR #{number}: {diff_err}")
                         diff_text = "(unavailable)"
