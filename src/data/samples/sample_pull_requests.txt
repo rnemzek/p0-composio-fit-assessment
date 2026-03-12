@@ -1,6 +1,6 @@
 {                       
     "data": {           
-        "pull": [
+        "pull_requests": [
   {
     "url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/pulls/9",
     "id": 3388311654,

@@ -200,7 +200,7 @@ class GitHubMonitor:
         Send one Gmail + Slack notification per PR updated since last_poll.
         Returns the number of notifications sent.
         """
-        pull_requests = data.get("data", {}).get("pull", [])
+        pull_requests = data.get("data", {}).get("pull_requests", [])
 
         new_prs = [
             pr for pr in pull_requests
