@@ -12,6 +12,7 @@ logger = logging.getLogger(os.environ.get("COMPOSIO_P0_LOGGER_NAME", "agent_logg
 
 ISSUE_EVENTS_SLUG = "GITHUB_LIST_ISSUE_EVENTS_FOR_A_REPOSITORY"
 COMMITS_SLUG      = "GITHUB_LIST_COMMITS"
+PR_SLUG           = "GITHUB_LIST_PULL_REQUESTS"
 
 
 class GitHubMonitor:
@@ -49,7 +50,8 @@ class GitHubMonitor:
                     notifications_sent += self._notify_issues(data, last_poll)
                 elif slug == COMMITS_SLUG:
                     notifications_sent += self._notify_commits(data, last_poll)
-                # PRs will be wired up here in a subsequent phase
+                elif slug == PR_SLUG:
+                    notifications_sent += self._notify_prs(data, last_poll)
             else:
                 logger.info(f"GH_MONITOR: [{slug}] — no new events")
 
@@ -190,5 +192,74 @@ class GitHubMonitor:
 
             except Exception as e:
                 logger.error(f"GH_MONITOR: failed to send email for commit: {e}")
+
+        return sent
+
+    def _notify_prs(self, data, last_poll):
+        """
+        Send one Gmail + Slack notification per PR updated since last_poll.
+        Returns the number of notifications sent.
+        """
+        pull_requests = data.get("data", {}).get("pull", [])
+
+        new_prs = [
+            pr for pr in pull_requests
+            if pr.get("updated_at", "") > last_poll
+        ]
+
+        if not new_prs:
+            logger.info(f"GH_MONITOR: [{PR_SLUG}] — no new PRs after filtering")
+            return 0
+
+        logger.info(f"GH_MONITOR: [{PR_SLUG}] — {len(new_prs)} new PR(s) found")
+        pretty = self.util.pretty_json(data)
+        logger.info(f"GH_MONITOR: payload:\n{pretty}")
+
+        sent = 0
+        for pr in new_prs:
+            try:
+                number      = pr.get("number", "?")
+                title       = pr.get("title", "(no title)")
+                state       = pr.get("state", "unknown")
+                created_at  = pr.get("created_at", "unknown")
+                updated_at  = pr.get("updated_at", "unknown")
+                html_url    = pr.get("html_url", "unknown")
+                body_text   = pr.get("body") or ""
+                created_by  = pr.get("head", {}).get("user", {}).get("login", "unknown")
+                repo_full   = pr.get("base", {}).get("repo", {}).get("full_name", "unknown")
+
+                body_preview = body_text[:200]
+
+                subject = f"{repo_full} | {title[:20]}"
+
+                email_body = (
+                    f"Poll Time: {last_poll}\n"
+                    f"PR Created: {created_at}\n"
+                    f"PR Updated: {updated_at}\n"
+                    f"PR Created by: {created_by}\n"
+                    f"Repo: {repo_full}\n"
+                    f"PR URL: {html_url}\n"
+                    f"PR State: {state}\n"
+                    f"Message: {body_preview}"
+                )
+
+                slack_body = (
+                    f"PR: {number}\n"
+                    f"Poll Time: {last_poll}\n"
+                    f"PR Created: {created_at}\n"
+                    f"PR Updated: {updated_at}\n"
+                    f"PR Created By: {created_by}\n"
+                    f"PR URL: {html_url}\n"
+                    f"PR State: {state}\n"
+                    f"Message: {body_preview}"
+                )
+
+                self.gmail.send_mail(subject=subject, body=email_body)
+                self.slack.send_message(slack_body)
+                logger.info(f"GH_MONITOR: notified PR #{number} [{title[:20]}] via Gmail + Slack")
+                sent += 1
+
+            except Exception as e:
+                logger.error(f"GH_MONITOR: failed to send notification for PR: {e}")
 
         return sent

@@ -1,0 +1,387 @@
+{                       
+    "data": {           
+        "pull": [
+  {
+    "url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/pulls/9",
+    "id": 3388311654,
+    "node_id": "PR_kwDORXuUyM7J9Yhm",
+    "html_url": "https://github.com/rnemzek/streaming-service-search-engine/pull/9",
+    "diff_url": "https://github.com/rnemzek/streaming-service-search-engine/pull/9.diff",
+    "patch_url": "https://github.com/rnemzek/streaming-service-search-engine/pull/9.patch",
+    "issue_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/issues/9",
+    "number": 9,
+    "state": "open",
+    "locked": false,
+    "title": "Added new file PR_TEST_001.txt to test PRs",
+    "user": {
+      "login": "rnemzek",
+      "id": 446902,
+      "node_id": "MDQ6VXNlcjQ0NjkwMg==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/446902?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/rnemzek",
+      "html_url": "https://github.com/rnemzek",
+      "followers_url": "https://api.github.com/users/rnemzek/followers",
+      "following_url": "https://api.github.com/users/rnemzek/following{/other_user}",
+      "gists_url": "https://api.github.com/users/rnemzek/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/rnemzek/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/rnemzek/subscriptions",
+      "organizations_url": "https://api.github.com/users/rnemzek/orgs",
+      "repos_url": "https://api.github.com/users/rnemzek/repos",
+      "events_url": "https://api.github.com/users/rnemzek/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/rnemzek/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "body": "Testing generating a PR",
+    "created_at": "2026-03-12T08:57:40Z",
+    "updated_at": "2026-03-12T08:57:40Z",
+    "closed_at": null,
+    "merged_at": null,
+    "merge_commit_sha": "f23a1c939c00fe1a75320657a5c2e69c8137c0eb",
+    "assignees": [
+
+    ],
+    "requested_reviewers": [
+
+    ],
+    "requested_teams": [
+
+    ],
+    "labels": [
+
+    ],
+    "milestone": null,
+    "draft": false,
+    "commits_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/pulls/9/commits",
+    "review_comments_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/pulls/9/comments",
+    "review_comment_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/pulls/comments{/number}",
+    "comments_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/issues/9/comments",
+    "statuses_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/statuses/649d86ecd4d69b95b0af34dec589b6917bafb948",
+    "head": {
+      "label": "rnemzek:pr-test-001",
+      "ref": "pr-test-001",
+      "sha": "649d86ecd4d69b95b0af34dec589b6917bafb948",
+      "user": {
+        "login": "rnemzek",
+        "id": 446902,
+        "node_id": "MDQ6VXNlcjQ0NjkwMg==",
+        "avatar_url": "https://avatars.githubusercontent.com/u/446902?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/rnemzek",
+        "html_url": "https://github.com/rnemzek",
+        "followers_url": "https://api.github.com/users/rnemzek/followers",
+        "following_url": "https://api.github.com/users/rnemzek/following{/other_user}",
+        "gists_url": "https://api.github.com/users/rnemzek/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/rnemzek/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/rnemzek/subscriptions",
+        "organizations_url": "https://api.github.com/users/rnemzek/orgs",
+        "repos_url": "https://api.github.com/users/rnemzek/repos",
+        "events_url": "https://api.github.com/users/rnemzek/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/rnemzek/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "repo": {
+        "id": 1165726920,
+        "node_id": "R_kgDORXuUyA",
+        "name": "streaming-service-search-engine",
+        "full_name": "rnemzek/streaming-service-search-engine",
+        "private": false,
+        "owner": {
+          "login": "rnemzek",
+          "id": 446902,
+          "node_id": "MDQ6VXNlcjQ0NjkwMg==",
+          "avatar_url": "https://avatars.githubusercontent.com/u/446902?v=4",
+          "gravatar_id": "",
+          "url": "https://api.github.com/users/rnemzek",
+          "html_url": "https://github.com/rnemzek",
+          "followers_url": "https://api.github.com/users/rnemzek/followers",
+          "following_url": "https://api.github.com/users/rnemzek/following{/other_user}",
+          "gists_url": "https://api.github.com/users/rnemzek/gists{/gist_id}",
+          "starred_url": "https://api.github.com/users/rnemzek/starred{/owner}{/repo}",
+          "subscriptions_url": "https://api.github.com/users/rnemzek/subscriptions",
+          "organizations_url": "https://api.github.com/users/rnemzek/orgs",
+          "repos_url": "https://api.github.com/users/rnemzek/repos",
+          "events_url": "https://api.github.com/users/rnemzek/events{/privacy}",
+          "received_events_url": "https://api.github.com/users/rnemzek/received_events",
+          "type": "User",
+          "user_view_type": "public",
+          "site_admin": false
+        },
+        "html_url": "https://github.com/rnemzek/streaming-service-search-engine",
+        "description": "Repo for a webapp that allows the user to search for TV Shows and Movies to see what streaming services they are available on plus other information like ratings, cast, when relelased, etc.",
+        "fork": false,
+        "url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine",
+        "forks_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/forks",
+        "keys_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/keys{/key_id}",
+        "collaborators_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/collaborators{/collaborator}",
+        "teams_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/teams",
+        "hooks_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/hooks",
+        "issue_events_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/issues/events{/number}",
+        "events_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/events",
+        "assignees_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/assignees{/user}",
+        "branches_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/branches{/branch}",
+        "tags_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/tags",
+        "blobs_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/git/blobs{/sha}",
+        "git_tags_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/git/tags{/sha}",
+        "git_refs_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/git/refs{/sha}",
+        "trees_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/git/trees{/sha}",
+        "statuses_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/statuses/{sha}",
+        "languages_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/languages",
+        "stargazers_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/stargazers",
+        "contributors_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/contributors",
+        "subscribers_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/subscribers",
+        "subscription_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/subscription",
+        "commits_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/commits{/sha}",
+        "git_commits_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/git/commits{/sha}",
+        "comments_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/comments{/number}",
+        "issue_comment_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/issues/comments{/number}",
+        "contents_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/contents/{+path}",
+        "compare_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/compare/{base}...{head}",
+        "merges_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/merges",
+        "archive_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/{archive_format}{/ref}",
+        "downloads_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/downloads",
+        "issues_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/issues{/number}",
+        "pulls_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/pulls{/number}",
+        "milestones_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/milestones{/number}",
+        "notifications_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/notifications{?since,all,participating}",
+        "labels_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/labels{/name}",
+        "releases_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/releases{/id}",
+        "deployments_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/deployments",
+        "created_at": "2026-02-24T13:33:23Z",
+        "updated_at": "2026-03-11T09:38:10Z",
+        "pushed_at": "2026-03-12T08:35:59Z",
+        "git_url": "git://github.com/rnemzek/streaming-service-search-engine.git",
+        "ssh_url": "git@github.com:rnemzek/streaming-service-search-engine.git",
+        "clone_url": "https://github.com/rnemzek/streaming-service-search-engine.git",
+        "svn_url": "https://github.com/rnemzek/streaming-service-search-engine",
+        "homepage": null,
+        "size": 91,
+        "stargazers_count": 0,
+        "watchers_count": 0,
+        "language": "TypeScript",
+        "has_issues": true,
+        "has_projects": true,
+        "has_downloads": true,
+        "has_wiki": true,
+        "has_pages": false,
+        "has_discussions": false,
+        "forks_count": 0,
+        "mirror_url": null,
+        "archived": false,
+        "disabled": false,
+        "open_issues_count": 7,
+        "license": null,
+        "allow_forking": true,
+        "is_template": false,
+        "web_commit_signoff_required": false,
+        "has_pull_requests": true,
+        "pull_request_creation_policy": "all",
+        "topics": [
+
+        ],
+        "visibility": "public",
+        "forks": 0,
+        "open_issues": 7,
+        "watchers": 0,
+        "default_branch": "main"
+      }
+    },
+    "base": {
+      "label": "rnemzek:main",
+      "ref": "main",
+      "sha": "2a8e8a6282ba3916ac732de6a3160e655de76efb",
+      "user": {
+        "login": "rnemzek",
+        "id": 446902,
+        "node_id": "MDQ6VXNlcjQ0NjkwMg==",
+        "avatar_url": "https://avatars.githubusercontent.com/u/446902?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/rnemzek",
+        "html_url": "https://github.com/rnemzek",
+        "followers_url": "https://api.github.com/users/rnemzek/followers",
+        "following_url": "https://api.github.com/users/rnemzek/following{/other_user}",
+        "gists_url": "https://api.github.com/users/rnemzek/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/rnemzek/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/rnemzek/subscriptions",
+        "organizations_url": "https://api.github.com/users/rnemzek/orgs",
+        "repos_url": "https://api.github.com/users/rnemzek/repos",
+        "events_url": "https://api.github.com/users/rnemzek/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/rnemzek/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "repo": {
+        "id": 1165726920,
+        "node_id": "R_kgDORXuUyA",
+        "name": "streaming-service-search-engine",
+        "full_name": "rnemzek/streaming-service-search-engine",
+        "private": false,
+        "owner": {
+          "login": "rnemzek",
+          "id": 446902,
+          "node_id": "MDQ6VXNlcjQ0NjkwMg==",
+          "avatar_url": "https://avatars.githubusercontent.com/u/446902?v=4",
+          "gravatar_id": "",
+          "url": "https://api.github.com/users/rnemzek",
+          "html_url": "https://github.com/rnemzek",
+          "followers_url": "https://api.github.com/users/rnemzek/followers",
+          "following_url": "https://api.github.com/users/rnemzek/following{/other_user}",
+          "gists_url": "https://api.github.com/users/rnemzek/gists{/gist_id}",
+          "starred_url": "https://api.github.com/users/rnemzek/starred{/owner}{/repo}",
+          "subscriptions_url": "https://api.github.com/users/rnemzek/subscriptions",
+          "organizations_url": "https://api.github.com/users/rnemzek/orgs",
+          "repos_url": "https://api.github.com/users/rnemzek/repos",
+          "events_url": "https://api.github.com/users/rnemzek/events{/privacy}",
+          "received_events_url": "https://api.github.com/users/rnemzek/received_events",
+          "type": "User",
+          "user_view_type": "public",
+          "site_admin": false
+        },
+        "html_url": "https://github.com/rnemzek/streaming-service-search-engine",
+        "description": "Repo for a webapp that allows the user to search for TV Shows and Movies to see what streaming services they are available on plus other information like ratings, cast, when relelased, etc.",
+        "fork": false,
+        "url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine",
+        "forks_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/forks",
+        "keys_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/keys{/key_id}",
+        "collaborators_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/collaborators{/collaborator}",
+        "teams_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/teams",
+        "hooks_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/hooks",
+        "issue_events_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/issues/events{/number}",
+        "events_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/events",
+        "assignees_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/assignees{/user}",
+        "branches_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/branches{/branch}",
+        "tags_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/tags",
+        "blobs_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/git/blobs{/sha}",
+        "git_tags_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/git/tags{/sha}",
+        "git_refs_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/git/refs{/sha}",
+        "trees_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/git/trees{/sha}",
+        "statuses_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/statuses/{sha}",
+        "languages_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/languages",
+        "stargazers_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/stargazers",
+        "contributors_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/contributors",
+        "subscribers_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/subscribers",
+        "subscription_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/subscription",
+        "commits_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/commits{/sha}",
+        "git_commits_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/git/commits{/sha}",
+        "comments_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/comments{/number}",
+        "issue_comment_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/issues/comments{/number}",
+        "contents_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/contents/{+path}",
+        "compare_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/compare/{base}...{head}",
+        "merges_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/merges",
+        "archive_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/{archive_format}{/ref}",
+        "downloads_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/downloads",
+        "issues_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/issues{/number}",
+        "pulls_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/pulls{/number}",
+        "milestones_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/milestones{/number}",
+        "notifications_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/notifications{?since,all,participating}",
+        "labels_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/labels{/name}",
+        "releases_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/releases{/id}",
+        "deployments_url": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/deployments",
+        "created_at": "2026-02-24T13:33:23Z",
+        "updated_at": "2026-03-11T09:38:10Z",
+        "pushed_at": "2026-03-12T08:35:59Z",
+        "git_url": "git://github.com/rnemzek/streaming-service-search-engine.git",
+        "ssh_url": "git@github.com:rnemzek/streaming-service-search-engine.git",
+        "clone_url": "https://github.com/rnemzek/streaming-service-search-engine.git",
+        "svn_url": "https://github.com/rnemzek/streaming-service-search-engine",
+        "homepage": null,
+        "size": 91,
+        "stargazers_count": 0,
+        "watchers_count": 0,
+        "language": "TypeScript",
+        "has_issues": true,
+        "has_projects": true,
+        "has_downloads": true,
+        "has_wiki": true,
+        "has_pages": false,
+        "has_discussions": false,
+        "forks_count": 0,
+        "mirror_url": null,
+        "archived": false,
+        "disabled": false,
+        "open_issues_count": 7,
+        "license": null,
+        "allow_forking": true,
+        "is_template": false,
+        "web_commit_signoff_required": false,
+        "has_pull_requests": true,
+        "pull_request_creation_policy": "all",
+        "topics": [
+
+        ],
+        "visibility": "public",
+        "forks": 0,
+        "open_issues": 7,
+        "watchers": 0,
+        "default_branch": "main"
+      }
+    },
+    "_links": {
+      "self": {
+        "href": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/pulls/9"
+      },
+      "html": {
+        "href": "https://github.com/rnemzek/streaming-service-search-engine/pull/9"
+      },
+      "issue": {
+        "href": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/issues/9"
+      },
+      "comments": {
+        "href": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/issues/9/comments"
+      },
+      "review_comments": {
+        "href": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/pulls/9/comments"
+      },
+      "review_comment": {
+        "href": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/pulls/comments{/number}"
+      },
+      "commits": {
+        "href": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/pulls/9/commits"
+      },
+      "statuses": {
+        "href": "https://api.github.com/repos/rnemzek/streaming-service-search-engine/statuses/649d86ecd4d69b95b0af34dec589b6917bafb948"
+      }
+    },
+    "author_association": "OWNER",
+    "auto_merge": null,
+    "assignee": null,
+    "active_lock_reason": null
+  }
+]
+
+# diff
+- url: https://patch-diff.githubusercontent.com/raw/rnemzek/streaming-service-search-engine/pull/9.diff
+- output
+diff --git a/PR_TEST_001.txt b/PR_TEST_001.txt
+new file mode 100644
+index 0000000..fa777ba
+--- /dev/null
++++ b/PR_TEST_001.txt
+@@ -0,0 +1 @@
++# PR TEST
+
+# patch
+- url: https://patch-diff.githubusercontent.com/raw/rnemzek/streaming-service-search-engine/pull/9.patch
+- output
+From 649d86ecd4d69b95b0af34dec589b6917bafb948 Mon Sep 17 00:00:00 2001
+From: rnemzek <rnemzek@gmail.com>
+Date: Thu, 12 Mar 2026 04:35:51 -0400
+Subject: [PATCH] Added new file PR_TEST_001.txt to test PRs
+
+---
+ PR_TEST_001.txt | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 PR_TEST_001.txt
+
+diff --git a/PR_TEST_001.txt b/PR_TEST_001.txt
+new file mode 100644
+index 0000000..fa777ba
+--- /dev/null
++++ b/PR_TEST_001.txt
+@@ -0,0 +1 @@
++# PR TEST
