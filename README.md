@@ -9,14 +9,17 @@ A proof-of-concept agentic system that monitors a GitHub repository for new Issu
 ```
 main.py  →  Executor (timed loop)  →  GitHubMonitor  →  GitHubConnector  →  Composio  →  GitHub
                                              │
-                                             └──  GmailConnector  →  Composio  →  Gmail
+                                             ├──  GmailConnector  →  Composio  →  Gmail
+                                             └──  SlackConnector  →  Composio  →  Slack (deferred)
 ```
 
 - **Executor** — drives a configurable polling loop (default: 60s)
 - **GitHubMonitor** — business logic: filters new events, deduplicates by issue number, dispatches notifications
 - **GitHubConnector** — Composio SDK calls for each configured GitHub slug
 - **GmailConnector** — sends formatted email notifications via Composio's Gmail integration
+- **SlackConnector** — sends Slack messages via Composio (connectivity issue deferred)
 - **Memory** — persists `last_poll_time` to `src/cognition/notified_ids.json`; only advances when new events are actually notified
+- **Util** — shared utilities including `fetch_url()` for HTTP GET requests
 
 ---
 
@@ -53,6 +56,7 @@ Set the following in your `.bash_profile` or `.env`:
 | `GMAIL_FROM` | Sender display name + address (e.g. `Composio Bot <you@gmail.com>`) |
 | `GMAIL_SLUG` | Composio slug for sending email (e.g. `GMAIL_SEND_EMAIL`) |
 | `GMAIL_BOT_VERSION` | Composio Gmail toolkit version |
+| `GH_PR_DIFF_BASE_URL` | Base URL for fetching PR diffs (e.g. `https://github.com`); full URL built as `{base}/{owner}/{repo}/pull/{number}.diff` |
 | `SLACK_CHANNEL_ID` | Target Slack channel ID (for future use) |
 | `COMPOSIO_MAIN_LOOP_DELAY` | Seconds between poll cycles (default: `60`) |
 
@@ -84,11 +88,11 @@ streamlit run src/ui/visualizer.py
 │   │   ├── composio_wrapper.py      # Unified Composio SDK wrapper
 │   │   ├── github_connector.py      # GitHub polling via Composio
 │   │   ├── gmail_connector.py       # Gmail sending via Composio
-│   │   └── slack_connector.py       # Slack messaging via Composio (in progress)
+│   │   └── slack_connector.py       # Slack messaging via Composio (deferred)
 │   ├── cognition/
 │   │   └── memory.py                # Persistent state (last_poll_time, notified IDs)
 │   ├── utils/
-│   │   └── util.py                  # Shared utilities
+│   │   └── util.py                  # Shared utilities (fetch_url, json helpers)
 │   └── ui/
 │       └── visualizer.py            # Streamlit log viewer
 └── src/tests/
