@@ -49,7 +49,7 @@
   ├────────────────────┼──────────────────────────────────────────────────────────────────────────┤
   │ GH_VERSION         │ GitHub Composio app version                                              │
   ├────────────────────┼──────────────────────────────────────────────────────────────────────────┤
-  │ PR_HTTP_DIFF_URL    │ Base URL for fetching PR diffs (e.g. https://patch-diff.githubusercontent│
+  │ GH_PR_DIFF_BASE_URL│ Base URL for fetching PR diffs (e.g. https://patch-diff.githubusercontent│
   │                    │ .com/raw). Full URL built as {base}/{owner}/{repo}/pull/{number}.diff     │
   └────────────────────┴──────────────────────────────────────────────────────────────────────────┘
 
