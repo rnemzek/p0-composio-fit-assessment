@@ -232,11 +232,10 @@ class GitHubMonitor:
 
                 body_preview = body_text[:200]
 
-                # Fetch diff text via Util using env-var base URL
+                # Fetch diff text directly from diff_url in PR response
                 diff_text = ""
-                diff_base = os.environ.get("GH_PR_DIFF_BASE_URL", "")
-                if diff_base:
-                    diff_url = f"{diff_base}/{repo_full}/pull/{number}.diff"
+                diff_url = pr.get("diff_url", "")
+                if diff_url:
                     try:
                         diff_text = self.util.fetch_url(diff_url)
                     except Exception as diff_err:

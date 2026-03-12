@@ -48,9 +48,6 @@
   │ GH_POLL_SLUGS      │ Comma-separated list of Composio slugs to poll                           │
   ├────────────────────┼──────────────────────────────────────────────────────────────────────────┤
   │ GH_VERSION         │ GitHub Composio app version                                              │
-  ├────────────────────┼──────────────────────────────────────────────────────────────────────────┤
-  │ GH_PR_DIFF_BASE_URL│ Base URL for fetching PR diffs (e.g. https://github.com).               │
-  │                    │ Full URL built as {base}/{owner}/{repo}/pull/{number}.diff                │
   └────────────────────┴──────────────────────────────────────────────────────────────────────────┘
 
   Gmail

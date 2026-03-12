@@ -56,7 +56,6 @@ Set the following in your `.bash_profile` or `.env`:
 | `GMAIL_FROM` | Sender display name + address (e.g. `Composio Bot <you@gmail.com>`) |
 | `GMAIL_SLUG` | Composio slug for sending email (e.g. `GMAIL_SEND_EMAIL`) |
 | `GMAIL_BOT_VERSION` | Composio Gmail toolkit version |
-| `GH_PR_DIFF_BASE_URL` | Base URL for fetching PR diffs (e.g. `https://github.com`); full URL built as `{base}/{owner}/{repo}/pull/{number}.diff` |
 | `SLACK_CHANNEL_ID` | Target Slack channel ID (for future use) |
 | `COMPOSIO_MAIN_LOOP_DELAY` | Seconds between poll cycles (default: `60`) |
 
