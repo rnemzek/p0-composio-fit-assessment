@@ -237,7 +237,7 @@ class GitHubMonitor:
                 diff_url = pr.get("diff_url", "")
                 if diff_url:
                     try:
-                        diff_text = self.util.fetch_url(diff_url)
+                        diff_text = self.util.fetch_url(diff_url)[:200]
                     except Exception as diff_err:
                         logger.warning(f"GH_MONITOR: failed to fetch diff for PR #{number}: {diff_err}")
                         diff_text = "(unavailable)"
