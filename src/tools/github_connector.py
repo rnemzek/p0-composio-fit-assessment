@@ -1,17 +1,18 @@
 import os
 import logging
 from composio import Composio
-from src.utils.util import Util
+from src.utils.util import Util, loadenv
+loadenv()
 
-logger = logging.getLogger(os.environ.get("COMPOSIO_P0_LOGGER_NAME", "agent_logger"))
+logger = logging.getLogger(os.getenv("COMPOSIO_P0_LOGGER_NAME", "agent_logger"))
 
 
 class GitHubConnector:
     def __init__(self):
-        self.composio = Composio(api_key=os.environ.get("COMPOSIO_API_KEY"))
-        self.user_id = os.environ.get("GMAIL_COMPOSIO_CONNECTION_ACCOUNT_USER_ID")
-        self.repo_owner = os.environ.get("GH_REPO_OWNER")
-        self.repo_name = os.environ.get("GH_REPO_NAME")
+        self.composio = Composio(api_key=os.getenv("COMPOSIO_API_KEY"))
+        self.user_id = os.getenv("GMAIL_COMPOSIO_CONNECTION_ACCOUNT_USER_ID")
+        self.repo_owner = os.getenv("GH_REPO_OWNER")
+        self.repo_name = os.getenv("GH_REPO_NAME")
         self.util = Util()
 
     def poll(self, since_ts):

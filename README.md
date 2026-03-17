@@ -43,21 +43,21 @@ pip install -r requirements.txt
 
 Set the following in your `.bash_profile` or `.env`:
 
-| Variable | Description |
-|---|---|
-| `COMPOSIO_API_KEY` | Composio API key |
-| `COMPOSIO_USER_ID` | Composio default user ID |
-| `COMPOSIO_P0_DIR` | Absolute path to project root (required) |
-| `GH_REPO_OWNER` | GitHub repo owner (e.g. `rnemzek`) |
-| `GH_REPO_NAME` | GitHub repo name |
-| `GH_POLL_SLUGS` | Comma-separated Composio slugs to poll (e.g. `GITHUB_LIST_ISSUE_EVENTS_FOR_A_REPOSITORY,GITHUB_LIST_COMMITS,GITHUB_LIST_PULL_REQUESTS`) |
-| `GMAIL_COMPOSIO_CONNECTION_ACCOUNT_USER_ID` | Composio user ID for Gmail connection |
-| `GMAIL_TO` | Notification recipient email |
-| `GMAIL_FROM` | Sender display name + address (e.g. `Composio Bot <you@gmail.com>`) |
-| `GMAIL_SLUG` | Composio slug for sending email (e.g. `GMAIL_SEND_EMAIL`) |
-| `GMAIL_BOT_VERSION` | Composio Gmail toolkit version |
-| `SLACK_CHANNEL_ID` | Target Slack channel ID (for future use) |
-| `COMPOSIO_MAIN_LOOP_DELAY` | Seconds between poll cycles (default: `60`) |
+| Variable                                    | Description                                                         |
+| ------------------------------------------- | ------------------------------------------------------------------- |
+| `COMPOSIO_API_KEY`                          | Composio API key                                                    |
+| `COMPOSIO_USER_ID`                          | Composio default user ID                                            |
+| `COMPOSIO_P0_DIR`                           | Absolute path to project root (required)                            |
+| `GH_REPO_OWNER`                             | GitHub repo owner (e.g. `rnemzek`)                                  |
+| `GH_REPO_NAME`                              | GitHub repo name                                                    |
+| `GH_POLL_SLUGS`                             | Comma-separated Composio slugs to poll (e.g. `GITHUB_LIST_ISSUE_EVENTS_FOR_A_REPOSITORY,GITHUB_LIST_COMMITS,GITHUB_LIST_PULL_REQUESTS`)                                                     | 
+| `GMAIL_COMPOSIO_CONNECTION_ACCOUNT_USER_ID` | Composio user ID for Gmail connection                               |
+| `GMAIL_TO`                                  | Notification recipient email                                        |
+| `GMAIL_FROM`                                | Sender display name + address (e.g. `Composio Bot <you@gmail.com>`) |
+| `GMAIL_SLUG`                                | Composio slug for sending email (e.g. `GMAIL_SEND_EMAIL`)           |
+| `GMAIL_BOT_VERSION`                         | Composio Gmail toolkit version                                      |
+| `SLACK_CHANNEL_ID`                          | Target Slack channel ID (for future use)                            |
+| `COMPOSIO_MAIN_LOOP_DELAY`                  | Seconds between poll cycles (default: `60`)                         |
 
 ---
 

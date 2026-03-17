@@ -1,5 +1,8 @@
-import time
 import os
+from src.utils.util import loadenv
+loadenv()
+
+import time
 import logging
 from logging.handlers import TimedRotatingFileHandler
 from src.agents.executor import Executor
@@ -7,7 +10,7 @@ from src.agents.executor import Executor
 #---------- CONFIGURE LOGGER ---------- #
 
 # 1. Grab base directory
-project_dir = os.environ.get("COMPOSIO_P0_DIR")
+project_dir = os.getenv("COMPOSIO_P0_DIR")
 if not project_dir:
     raise ValueError("Big Sexy, you forgot to set 'COMPOSIO_P0_DIR'!")
 
@@ -15,12 +18,12 @@ log_dir = os.path.join(project_dir, "logs")
 os.makedirs(log_dir, exist_ok=True)
 
 # 2. Grab environment variables for rotation
-logger_name = os.environ.get("COMPOSIO_P0_LOGGER_NAME", "agent_logger")
-log_file_name = os.environ.get("COMPOSIO_P0_LOG_NAME", "agent_activity.log")
-log_config_when = os.environ.get("COMPOSIO_P0_LOG_CONFIG_WHEN", "midnight")
-log_config_interval = int(os.environ.get("COMPOSIO_P0_LOG_CONFIG_INTERVAL", 1))
-log_config_backup_count = int(os.environ.get("COMPOSIO_P0_LOG_CONFIG_BACKUPCOUNT", 7))
-log_config_encoding = os.environ.get("COMPOSIO_P0_LOG_CONFIG_ENCODING", "utf-8") # Fixed typo!
+logger_name = os.getenv("COMPOSIO_P0_LOGGER_NAME", "agent_logger")
+log_file_name = os.getenv("COMPOSIO_P0_LOG_NAME", "agent_activity.log")
+log_config_when = os.getenv("COMPOSIO_P0_LOG_CONFIG_WHEN", "midnight")
+log_config_interval = int(os.getenv("COMPOSIO_P0_LOG_CONFIG_INTERVAL", 1))
+log_config_backup_count = int(os.getenv("COMPOSIO_P0_LOG_CONFIG_BACKUPCOUNT", 7))
+log_config_encoding = os.getenv("COMPOSIO_P0_LOG_CONFIG_ENCODING", "utf-8") # Fixed typo!
 
 # 3. Setup the Logger
 logger = logging.getLogger(logger_name)
@@ -54,20 +57,20 @@ logger.info("✅ SYSTEM: Logging initialized with daily rotation. Big Sexy is in
 
 def main():
     logger.info("🚀 SYSTEM: Big Sexy's Agentic POC is waking up...")
-    
+
     try:
         # Initialize the Executor
         agent_executor = Executor()
-        
+
         while True:
             logger.info("SYSTEM: Starting execution cycle...")
             agent_executor.run_cycle()
-            
+
             # Using your string-to-int skill here!
-            delay = int(os.environ.get("COMPOSIO_MAIN_LOOP_DELAY", 10))
+            delay = int(os.getenv("COMPOSIO_MAIN_LOOP_DELAY", 10))
             logger.info(f"SYSTEM: Cycle complete. Sleeping for {delay}s...")
             time.sleep(delay)
-            
+
     except Exception as e:
         logger.error(f"SYSTEM FAILURE: {str(e)}")
     except KeyboardInterrupt:
@@ -75,4 +78,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

@@ -1,14 +1,15 @@
 import os
 import json
 from composio import Composio
-from src.utils.util import Util
+from src.utils.util import Util, loadenv
+loadenv()
 
 util = Util()
 timestamp = util.getDateTimestamp()
 print(f">>>>> " + timestamp)
 
 # Initialize with your API Key (get it from the Composio Dashboard)
-composio_api_key = os.environ.get("COMPOSIO_API_KEY")
+composio_api_key = os.getenv("COMPOSIO_API_KEY")
 
 print(">>>>> Creating composio using api_key=" + composio_api_key)
 composio = Composio(api_key=composio_api_key)
@@ -34,7 +35,7 @@ def send_mail():
                 "is_html": False,
                 "from_email": "Composio Bot <rnemzek+composio-poc@gmail.com>"
             },
-            version=os.environ.get("GMAIL_BOT_VERSION")     # 20260227_00
+            version=os.getenv("GMAIL_BOT_VERSION")     # 20260227_00
         )
         print(f">>>>> SENT EMAIL")
         return result
@@ -51,5 +52,3 @@ if output is not None:
 
 else:
     print(f">>>>> output is NULL!")
-
-

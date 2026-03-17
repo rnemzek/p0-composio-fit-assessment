@@ -2,7 +2,8 @@ import os
 import sys
 import json
 from composio import Composio
-from src.utils.util import Util
+from src.utils.util import Util, loadenv
+loadenv()
 
 USAGE = """
 Usage:
@@ -53,12 +54,12 @@ def validate_args():
 
 def send_mail(repo, subject, body):
     timestamp = Util().getDateTimestamp()
-    composio_api_key = os.environ.get("COMPOSIO_API_KEY")
-    user_id          = os.environ.get("GMAIL_COMPOSIO_CONNECTION_ACCOUNT_USER_ID")
-    slug             = os.environ.get("GMAIL_SLUG")
-    to_email         = os.environ.get("GMAIL_TO")
-    from_email       = os.environ.get("GMAIL_FROM")
-    bot_version      = os.environ.get("GMAIL_BOT_VERSION")
+    composio_api_key = os.getenv("COMPOSIO_API_KEY")
+    user_id          = os.getenv("GMAIL_COMPOSIO_CONNECTION_ACCOUNT_USER_ID")
+    slug             = os.getenv("GMAIL_SLUG")
+    to_email         = os.getenv("GMAIL_TO")
+    from_email       = os.getenv("GMAIL_FROM")
+    bot_version      = os.getenv("GMAIL_BOT_VERSION")
 
     missing_env = [k for k, v in {
         "COMPOSIO_API_KEY":                          composio_api_key,
@@ -107,5 +108,3 @@ def send_mail(repo, subject, body):
 if __name__ == "__main__":
     repo, subject, body = validate_args()
     send_mail(repo, subject, body)
-
-

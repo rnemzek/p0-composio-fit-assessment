@@ -1,15 +1,10 @@
 import os
-from pathlib import Path
 from composio import Composio
-from dotenv import load_dotenv
-
-# Pathing (Big Sexy's verified logic)
-current_dir = Path(__file__).resolve().parent
-project_root = current_dir.parent.parent
-load_dotenv(dotenv_path=project_root / ".env")
+from src.utils.util import loadenv
+loadenv()
 
 def audit_my_tools():
-    api_key = os.environ.get("COMPOSIO_API_KEY")
+    api_key = os.getenv("COMPOSIO_API_KEY")
     client = Composio(api_key=api_key)
 
     print("🔍 AUDIT: Fetching ALL enabled actions for your account...")
@@ -17,10 +12,10 @@ def audit_my_tools():
     try:
         # In 0.11.1, this returns the full list of what YOU have enabled
         actions = client.actions.get()
-        
+
         # Filter for GitHub
         github_actions = [a for a in actions if "github" in a.get('name', '').lower() or "github" in a.get('slug', '').lower()]
-        
+
         if not github_actions:
             print("❌ ZERO GitHub actions found. Is the GitHub App 'Enabled' in your dashboard?")
             return
@@ -35,4 +30,3 @@ def audit_my_tools():
 
 if __name__ == "__main__":
     audit_my_tools()
-

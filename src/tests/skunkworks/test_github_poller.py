@@ -2,16 +2,16 @@ import os
 import time
 from datetime import datetime, timezone
 from composio import Composio
-from dotenv import load_dotenv
+from src.utils.util import loadenv
+loadenv()
 
-load_dotenv()
-composio = Composio(api_key=os.environ.get("COMPOSIO_API_KEY"))
+composio = Composio(api_key=os.getenv("COMPOSIO_API_KEY"))
 
 # Configuration
-USER_ID=os.environ.get("GMAIL_ACCOUNT_USER_ID")     # rnemzek_composio_poc
-GH_REPO_OWNER=os.environ.get("GH_REPO_OWNER")       # rnemzek 
-GH_REPO_NAME=os.environ.get("GH_REPO_NAME")         # streaming-service-search-engine
-GH_POLL_INTERVAL=60                                 # Seconds between polls
+USER_ID=os.getenv("GMAIL_ACCOUNT_USER_ID")     # rnemzek_composio_poc
+GH_REPO_OWNER=os.getenv("GH_REPO_OWNER")       # rnemzek
+GH_REPO_NAME=os.getenv("GH_REPO_NAME")         # streaming-service-search-engine
+GH_POLL_INTERVAL=60                            # Seconds between polls
 
 def poll_github_issues():
     # Initialize 'last_check' to current time or a past date for first run
@@ -21,7 +21,7 @@ def poll_github_issues():
     while True:
         try:
             print(f"🔍 Polling for issues since {last_check}...")
-            
+
             # Execute GitHub tool to list issues
             response = composio.tools.execute(
                 user_id=USER_ID,
@@ -40,8 +40,8 @@ def poll_github_issues():
                 for issue in issues:
                     # Logic to handle only 'opened' issues if 'since' catches updates
                     print(f"🚩 New/Updated Issue Found: #{issue['number']} - {issue['title']}")
-                    print(">>>>>Gonna try and print out issue ...") 
-                    print(">>>>>Issue: " + issue); 
+                    print(">>>>>Gonna try and print out issue ...")
+                    print(">>>>>Issue: " + issue);
                     # Optional: Send Gmail Notification
                     # composio.tools.execute(user_id=USER_ID, slug="GMAIL_SEND_EMAIL", ...)
 
@@ -57,4 +57,3 @@ def poll_github_issues():
 
 if __name__ == "__main__":
     poll_github_issues()
-

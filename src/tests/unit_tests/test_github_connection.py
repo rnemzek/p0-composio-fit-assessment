@@ -1,33 +1,23 @@
 import os
-from pathlib import Path
 from composio import Composio
-from dotenv import load_dotenv
-
-# 1. Explicitly find the .env in the PROJECT ROOT (two levels up from src/tests)
-current_dir = Path(__file__).resolve().parent # src/tests
-project_root = current_dir.parent.parent      # project-root/
-env_path = project_root / ".env"
-
-load_dotenv(dotenv_path=env_path)
+from src.utils.util import loadenv
+loadenv()
 
 def test_github_direct():
-    # 2. Use os.environ.get to grab from the shell (.bash_profile)
-    composio_api_key = os.environ.get("COMPOSIO_API_KEY")
-
-    # 3. Use os.environ.get to grab from the loaded .env file
-    repo_full_name = os.environ.get("GH_REPO")
+    composio_api_key = os.getenv("COMPOSIO_API_KEY")
+    repo_full_name = os.getenv("GH_REPO")
 
     print(f"🔑 Composio Key Found: {'✅ Yes' if composio_api_key else '❌ No'}")
     print(f"📁 GH_REPO Found: {'✅ Yes' if repo_full_name else '❌ No'}")
 
     if not composio_api_key:
-        print("\n❌ Error: Still missing COMPOSIO_API_KEY. Check .bash_profile.")
+        print("\n❌ Error: Still missing COMPOSIO_API_KEY. Check .env.")
         return
 
     if not repo_full_name:
-        print("\n❌ Error: Still missing GH_REPO. Should be in project root .env file. Check paths above.")
+        print("\n❌ Error: Still missing GH_REPO. Check .env in project root.")
         return
-    
+
     # Split the repo (e.g., "rnemzek/repo" -> "rnemzek", "repo")
     owner, repo = repo_full_name.split('/')
 
@@ -43,7 +33,7 @@ def test_github_direct():
 #            "GITHUB_LIST_REPOSITORY_ISSUES",
             "GITHUB_LIST_ISSUE_EVENTS_FOR_A_REPOSITORY",
             arguments={
-                "owner": owner, 
+                "owner": owner,
                 "repo": repo
             }
         )
@@ -57,13 +47,12 @@ def test_github_direct():
         else:
             print(f"🤷 Found the repo, but the issue list is empty: {output}")
             return
-        
+
         print("\n✅ Success! GitHub Connection Verified.")
         print(f"Latest activity found: {output}")
-        
+
     except Exception as e:
         print(f"❌ Connection Failed: {e}")
 
 if __name__ == "__main__":
     test_github_direct()
-

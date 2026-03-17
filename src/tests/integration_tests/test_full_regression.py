@@ -2,17 +2,18 @@ import os
 import ast
 from composio import Composio
 from src.cognition.memory import Memory
-from src.utils.util import Util
+from src.utils.util import Util, loadenv
+loadenv()
 
 class GitHubTest:
     def __init__(self):
         self.memory = Memory()
-        self.composio = Composio(api_key=(os.environ.get("COMPOSIO_API_KEY")))
-        self.user_id = os.environ.get("GMAIL_COMPOSIO_CONNECTION_ACCOUNT_USER_ID")
-        self.repo_owner = os.environ.get("GH_REPO_OWNER")
-        self.repo_name = os.environ.get("GH_REPO_NAME")
-    
-    def run_test_issues(self): 
+        self.composio = Composio(api_key=os.getenv("COMPOSIO_API_KEY"))
+        self.user_id = os.getenv("GMAIL_COMPOSIO_CONNECTION_ACCOUNT_USER_ID")
+        self.repo_owner = os.getenv("GH_REPO_OWNER")
+        self.repo_name = os.getenv("GH_REPO_NAME")
+
+    def run_test_issues(self):
         response = self.composio.tools.execute(
             user_id=self.user_id,
             slug="GITHUB_LIST_ISSUE_EVENTS_FOR_A_REPOSITORY",
@@ -32,7 +33,7 @@ class GitHubTest:
         else:
             print("Response was None")
 
-    def run_test(self): 
+    def run_test(self):
         # set up last_poll_date
         last_poll_time = self.memory.get_last_poll_time()
         print(f"last poll time: {last_poll_time}")
@@ -46,8 +47,8 @@ class GitHubTest:
         # set up slugs array
         github_slugs = util.get_environ_variable_as_array("GH_POLL_SLUGS")
         print(f"github_slugs = {github_slugs}")
-        
-        # loop thru pulling events for each slug"	
+
+        # loop thru pulling events for each slug"
         for slug in github_slugs:
             print(f"⚙️  pulling for events of type {slug}")
             if slug != "GITHUB_LIST_COMMITS":                  # GITHUB_LIST_COMMITS don't have a state
@@ -86,11 +87,10 @@ class GitHubTest:
                     print(f"✅ {slug}: pretty json\n{pretty_json}")
                 else:
                     print(f"❌ {slug}: had no events found")
-            else: 
+            else:
                 print(f"❌ {slug}: had not events found" )
 
 print("Starting run_test....🚀")
 gh = GitHubTest()
-gh.run_test() 
+gh.run_test()
 print("Done run_test\n")
-

@@ -1,18 +1,45 @@
 import os
+import html as _html
 import logging
 from datetime import datetime, timezone
+from src.utils.util import loadenv, Util
+loadenv()
 from src.cognition.memory import Memory
 from src.tools.github_connector import GitHubConnector
 from src.tools.gmail_connector import GmailConnector
 from src.tools.slack_connector import SlackConnector
 from src.tools.composio_wrapper import ComposioWrapper
-from src.utils.util import Util
 
-logger = logging.getLogger(os.environ.get("COMPOSIO_P0_LOGGER_NAME", "agent_logger"))
+logger = logging.getLogger(os.getenv("COMPOSIO_P0_LOGGER_NAME", "agent_logger"))
 
 ISSUE_EVENTS_SLUG = "GITHUB_LIST_ISSUE_EVENTS_FOR_A_REPOSITORY"
 COMMITS_SLUG      = "GITHUB_LIST_COMMITS"
 PR_SLUG           = "GITHUB_LIST_PULL_REQUESTS"
+
+
+def _label_chip_html(lbl):
+    """Render a GitHub label as a colored pill chip with hover tooltip."""
+    name  = lbl.get('name', '').upper()
+    desc  = lbl.get('description', '') or ''
+    color = (lbl.get('color', '') or 'cccccc').lstrip('#')
+
+    # Luminance-based text color — same formula GitHub uses
+    r, g, b   = int(color[0:2], 16), int(color[2:4], 16), int(color[4:6], 16)
+    text_color = '#fff' if (0.299 * r + 0.587 * g + 0.114 * b) < 128 else '#333'
+
+    title_attr = f' title="{_html.escape(desc)}"' if desc else ''
+    return (
+        f'<span{title_attr} style="display:inline-block;background:#{color};color:{text_color};'
+        f'font-weight:bold;padding:2px 10px;border-radius:12px;font-size:12px;margin:2px;">'
+        f'{_html.escape(name)}</span>'
+    )
+
+
+def _label_chip_slack(lbl):
+    """Render a GitHub label for Slack: bold name + description."""
+    name = lbl.get('name', '').upper()
+    desc = lbl.get('description', '') or ''
+    return f"  *{name}*: {desc}" if desc else f"  *{name}*"
 
 
 class GitHubMonitor:
@@ -113,31 +140,43 @@ class GitHubMonitor:
                 # --- subject ---
                 subject = f"Issue: {issue.get('number')} | {updated_at}"
 
-                # --- state line ---
+                # --- state value (without label prefix) ---
                 if state == "CLOSED" and closed_at:
-                    state_line = f"State: CLOSED ({closed_at})"
+                    state_value = f"CLOSED ({closed_at})"
                 else:
-                    state_line = f"State: {state}"
+                    state_value = state
 
-                # --- labels (uppercase) ---
-                label_lines = "\n".join(f"  {lbl.get('name', '').upper()}" for lbl in labels)
+                # --- labels: colored chip (HTML) / bold name+desc (Slack) ---
+                label_lines      = "\n".join(_label_chip_slack(lbl) for lbl in labels)
+                label_lines_html = " ".join(_label_chip_html(lbl)  for lbl in labels)
 
                 # --- body preview ---
                 body_preview = body_text[:200]
 
                 email_body = (
-                    f"Poll Time: {last_poll}\n"
-                    f"Issue Created: {issue_created_at}\n"
-                    f"Last Updated: {updated_at}\n"
-                    f"Issue URL: {html_url}\n"
-                    f"Title: {title}\n"
-                    f"{state_line}\n"
-                    f"Labels:\n{label_lines}\n"
-                    f"\nBody: {body_preview}"
+                    f"<b>Poll Time:</b> {last_poll}<br>"
+                    f"<b>Issue Created:</b> {issue_created_at}<br>"
+                    f"<b>Last Updated:</b> {updated_at}<br>"
+                    f"<b>Issue URL:</b> {html_url}<br>"
+                    f"<b>Title:</b> {_html.escape(title)}<br>"
+                    f"<b>State:</b> {state_value}<br>"
+                    f"<b>Labels:</b><br>{label_lines_html}<br>"
+                    f"<b>Body:</b> {_html.escape(body_preview)}"
                 )
 
-                self.gmail.send_mail(subject=subject, body=email_body)
-                self.slack.send_message(f"{subject}\n{email_body}")
+                slack_body = (
+                    f"*Poll Time:* {last_poll}\n"
+                    f"*Issue Created:* {issue_created_at}\n"
+                    f"*Last Updated:* {updated_at}\n"
+                    f"*Issue URL:* {html_url}\n"
+                    f"*Title:* {title}\n"
+                    f"*State:* {state_value}\n"
+                    f"*Labels:*\n{label_lines}\n"
+                    f"*Body:* {body_preview}"
+                )
+
+                self.gmail.send_mail(subject=subject, body=email_body, is_html=True)
+                self.slack.send_message(slack_body)
                 logger.info(f"GH_MONITOR: notified issue #{issue.get('number')} [{title}] via Gmail + Slack")
                 sent += 1
 
@@ -180,15 +219,23 @@ class GitHubMonitor:
                 subject = f"Commit: {sha[:7]}"
 
                 email_body = (
-                    f"Poll Time: {last_poll}\n"
-                    f"Commit Created: {author_date}\n"
-                    f"Committed By: {author_name}\n"
-                    f"Commit URL: {html_url}\n"
-                    f"Message: {message}"
+                    f"<b>Poll Time:</b> {last_poll}<br>"
+                    f"<b>Commit Created:</b> {author_date}<br>"
+                    f"<b>Committed By:</b> {_html.escape(author_name)}<br>"
+                    f"<b>Commit URL:</b> {html_url}<br>"
+                    f"<b>Message:</b> {_html.escape(message)}"
                 )
 
-                self.gmail.send_mail(subject=subject, body=email_body)
-                self.slack.send_message(f"{subject}\n{email_body}")
+                slack_body = (
+                    f"*Poll Time:* {last_poll}\n"
+                    f"*Commit Created:* {author_date}\n"
+                    f"*Committed By:* {author_name}\n"
+                    f"*Commit URL:* {html_url}\n"
+                    f"*Message:* {message}"
+                )
+
+                self.gmail.send_mail(subject=subject, body=email_body, is_html=True)
+                self.slack.send_message(slack_body)
                 logger.info(f"GH_MONITOR: notified commit [{sha[:7]}] via Gmail + Slack")
                 sent += 1
 
@@ -245,30 +292,30 @@ class GitHubMonitor:
                 subject = f"{repo_full} | PR#{number} | {title[:20]}"
 
                 email_body = (
-                    f"Poll Time: {last_poll}\n"
-                    f"PR Created: {created_at}\n"
-                    f"PR Updated: {updated_at}\n"
-                    f"PR Created by: {created_by}\n"
-                    f"Repo: {repo_full}\n"
-                    f"PR URL: {html_url}\n"
-                    f"PR State: {state}\n"
-                    f"Message: {body_preview}\n"
-                    f"PR Diff:\n{diff_text}"
+                    f"<b>Poll Time:</b> {last_poll}<br>"
+                    f"<b>PR Created:</b> {created_at}<br>"
+                    f"<b>PR Updated:</b> {updated_at}<br>"
+                    f"<b>PR Created by:</b> {_html.escape(created_by)}<br>"
+                    f"<b>Repo:</b> {repo_full}<br>"
+                    f"<b>PR URL:</b> {html_url}<br>"
+                    f"<b>PR State:</b> {state}<br>"
+                    f"<b>Message:</b> {_html.escape(body_preview)}<br>"
+                    f"<b>PR Diff:</b><br>{_html.escape(diff_text).replace(chr(10), '<br>')}"
                 )
 
                 slack_body = (
-                    f"PR: {number}\n"
-                    f"Poll Time: {last_poll}\n"
-                    f"PR Created: {created_at}\n"
-                    f"PR Updated: {updated_at}\n"
-                    f"PR Created By: {created_by}\n"
-                    f"PR URL: {html_url}\n"
-                    f"PR State: {state}\n"
-                    f"Message: {body_preview}\n"
-                    f"PR Diff:\n{diff_text}"
+                    f"*PR:* {number}\n"
+                    f"*Poll Time:* {last_poll}\n"
+                    f"*PR Created:* {created_at}\n"
+                    f"*PR Updated:* {updated_at}\n"
+                    f"*PR Created By:* {created_by}\n"
+                    f"*PR URL:* {html_url}\n"
+                    f"*PR State:* {state}\n"
+                    f"*Message:* {body_preview}\n"
+                    f"*PR Diff:*\n{diff_text}"
                 )
 
-                self.gmail.send_mail(subject=subject, body=email_body)
+                self.gmail.send_mail(subject=subject, body=email_body, is_html=True)
                 self.slack.send_message(slack_body)
                 logger.info(f"GH_MONITOR: notified PR #{number} [{title[:20]}] via Gmail + Slack")
                 sent += 1

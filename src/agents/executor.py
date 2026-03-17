@@ -1,9 +1,11 @@
 import os
 import logging
+from src.utils.util import loadenv
+loadenv()
 from src.agents.github_monitor import GitHubMonitor
 
 # Use the same logger name from your main.py config
-logger = logging.getLogger(os.environ.get("COMPOSIO_P0_LOGGER_NAME", "agent_logger"))
+logger = logging.getLogger(os.getenv("COMPOSIO_P0_LOGGER_NAME", "agent_logger"))
 
 class Executor:
     def __init__(self):
@@ -33,4 +35,3 @@ class Executor:
             logger.warning("⚠️ EXECUTOR: GitHub Monitor is offline, skipping check.")
 
         logger.info("🏁 EXECUTOR: Cycle complete.")
-

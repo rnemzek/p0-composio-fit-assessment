@@ -1,7 +1,16 @@
 import os
 import json
 import requests
+from pathlib import Path
 from datetime import datetime
+from dotenv import load_dotenv
+
+
+def loadenv():
+    """Load .env from the project root into the environment."""
+    env_path = Path(__file__).resolve().parent.parent.parent / ".env"
+    load_dotenv(dotenv_path=env_path)
+
 
 class Util:
     @staticmethod
@@ -10,11 +19,11 @@ class Util:
 
     @staticmethod
     def get_environ_variable_as_array(environ_key):
-        my_string = os.environ.get(environ_key)
+        my_string = os.getenv(environ_key)
         return my_string.split(",")
 
     def raiseError(self, v_name, v_value, env_variable):
-        compare_value = os.environ.get(v_name)
+        compare_value = os.getenv(v_name)
         if v_value is not None and v_value == compare_value:
             print(f"✅ Passed check: {v_name}")
         else:
@@ -30,12 +39,12 @@ class Util:
 
         # 3. return pretty json
         return pretty_json
-        
+
     def pretty_json(self, data):
         # If 'data' is already a dict, don't call json.loads()
         if isinstance(data, dict):
             return json.dumps(data, indent=4)
-        
+
         # If it's a string, load it first then dump it
         parsed = json.loads(data)
         return json.dumps(parsed, indent=4)
@@ -60,4 +69,3 @@ class Util:
         else:
             print("☑️   No events found")
             return False
-

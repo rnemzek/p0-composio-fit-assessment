@@ -1,10 +1,12 @@
 import os
 from composio import Composio
+from src.utils.util import loadenv
+loadenv()
 
 # Initialize with your COMPOSIO_API_KEY (starts with 'comp_')
 composio = Composio(
-    api_key=os.environ.get("COMPOSIO_API_KEY"),                    # ak_NguOTc4AwH4s0Qu_KUQ7 
-    toolkit_versions={"slack": os.environ.get("SLACK_VERSION")}     # 20260227_00
+    api_key=os.getenv("COMPOSIO_API_KEY"),                    # ak_NguOTc4AwH4s0Qu_KUQ7
+    toolkit_versions={"slack": os.getenv("SLACK_VERSION")}   # 20260227_00
 )
 
 try:
@@ -14,13 +16,12 @@ try:
         user_id="pg-test-fb03294d-998b-4fbd-8143-ab9f142e7003",
         slug="SLACK_SEND_MESSAGE",
         arguments={
-            "channel": os.environ.get("SLACK_CHANNEL_ID"),         # C0AJ5QTA94Z
+            "channel": os.getenv("SLACK_CHANNEL_ID"),         # C0AJ5QTA94Z
             "text": "4th attemp: The onion is sauteed, the door is open, and the connection is ACTIVE! 🧅🚀"
         }
     )
-    
+
     print(f"Success: {result}")
 
 except Exception as e:
     print(f"Error: {e}")
-
